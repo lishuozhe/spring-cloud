@@ -1,0 +1,61 @@
+#  默认的profile为eureka，单节点。多节点通过指定启动参数使用不同的profile，比如：  
+#  节点1：java -jar spring-cloud-eureka.jar --spring.profiles.active=eureka1 
+#  节点2：java -jar spring-cloud-eureka.jar --spring.profiles.active=eureka2
+#  节点3：java -jar spring-cloud-eureka.jar --spring.profiles.active=eureka3
+
+spring:
+    profiles:
+        active: eureka
+---     
+spring: 
+  application:
+    name: spring-cloud-eureka
+  profiles: eureka
+server:
+  port: 8000
+  
+eureka: 
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://localhost:${server.port}/eureka/
+---
+spring:
+  application:
+    name: spring-cloud-eureka
+  profiles: eureka1
+server:
+  port: 8000
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8001/eureka/,http://localhost:8002/eureka/
+---
+spring:
+  application:
+    name: spring-cloud-eureka
+  profiles: eureka2
+server:
+  port: 8001
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/,http://localhost:8002/eureka/
+---
+spring:
+  application:
+    name: spring-cloud-eureka
+  profiles: eureka3
+server:
+  port: 8002
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/,http://localhost:8001/eureka/

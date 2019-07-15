@@ -1,0 +1,22 @@
+spring:
+    profiles:
+        active: dev
+---     
+spring: 
+  application:
+    name: spring-cloud-turbine
+  profiles: dev
+  
+server:
+  port: 8001
+  
+turbine:
+  appConfig: spring-cloud-consumer
+  aggregator:
+    clusterConfig: default
+  clusterNameExpression: new String("default")
+  
+eureka: 
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
