@@ -1,6 +1,13 @@
 # spring-cloud
 spring-cloud微服务架构
 
+### 架构图
+
+##### 系统架构图
+
+![系统架构图](document/resources/springcloud架构.png)
+
+
 ### 项目结构
 
 ``` lua
