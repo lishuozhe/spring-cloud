@@ -38,5 +38,6 @@
 		<module>spring-cloud-turbine</module>
 		<module>spring-cloud-config</module>
 		<module>spring-cloud-zuul</module>
+		<module>spring-cloud-zipkin</module>
 	</modules>
 </project>

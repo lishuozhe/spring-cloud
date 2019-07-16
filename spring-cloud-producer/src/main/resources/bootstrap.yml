@@ -3,7 +3,7 @@ spring:
     name: spring-cloud-producer
   cloud: 
     config:
-      uri: http://localhost:8200/
+      uri: http://localhost:8300/
       name: config
       profile: dev
       label: master
@@ -15,6 +15,11 @@ spring:
     port: 5672
     username: admin
     password: admin
+  zipkin:
+    base-url: http://localhost:8300
+  sleuth:
+    sampler:
+      percentage: 1.0
 eureka: 
   client:
     serviceUrl:
