@@ -1,5 +1,10 @@
 server:
   port: 8200
+  
+management:
+  security:
+    enabled: false
+
 spring:
   application:
     name: spring-cloud-config
@@ -11,6 +16,15 @@ spring:
           search-paths: config                                # git仓库地址下的相对地址，可以配置多个，用,分割。
           username: 1216535@qq.com                            # git仓库的账号
           password: fanxia520                                 # git仓库的密码
+    bus:
+      trace:
+        enabled: true # 开启cloud bus跟踪
+  rabbitmq:
+    host: 192.168.2.20
+    port: 5672
+    username: admin
+    password: admin
+
 eureka:
   client:
     serviceUrl:

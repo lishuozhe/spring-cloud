@@ -1,13 +1,20 @@
 spring: 
+  application:
+    name: spring-cloud-producer
   cloud: 
     config:
+      uri: http://localhost:8200/
       name: config
       profile: dev
       label: master
       discovery:
         enabled: true
         serviceId: spring-cloud-config
-
+  rabbitmq:
+    host: 192.168.2.20
+    port: 5672
+    username: admin
+    password: admin
 eureka: 
   client:
     serviceUrl:
