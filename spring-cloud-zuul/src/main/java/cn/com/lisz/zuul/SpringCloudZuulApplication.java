@@ -1,11 +1,11 @@
-package cn.com.micro.zuul;
+package cn.com.lisz.zuul;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 
-import cn.com.micro.zuul.filter.TokenFilter;
+import cn.com.lisz.zuul.filter.TokenFilter;
 
 @SpringBootApplication
 @EnableZuulProxy

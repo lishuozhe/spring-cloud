@@ -1,4 +1,4 @@
-package cn.com.micro.zuul.fallback;
+package cn.com.lisz.zuul.fallback;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

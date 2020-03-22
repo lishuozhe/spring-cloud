@@ -1,4 +1,4 @@
-package cn.com.micro.producer.controller;
+package cn.com.lisz.producer.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;

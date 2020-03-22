@@ -1,4 +1,4 @@
-package cn.com.micro.zuul.filter;
+package cn.com.lisz.zuul.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;

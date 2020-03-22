@@ -1,4 +1,4 @@
-package cn.com.micro.producer;
+package cn.com.lisz.producer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

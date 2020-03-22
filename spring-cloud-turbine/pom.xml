@@ -4,12 +4,12 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>cn.com.micro</groupId>
+	<groupId>cn.com.lisz</groupId>
 	<artifactId>spring-cloud-turbine</artifactId>
 	<version>1.0</version>
 	<name>spring-cloud-turbine</name>
 	<url>http://maven.apache.org</url>
-	<description>Demo project for Spring cloud turbine</description>
+	<description>熔断监控</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

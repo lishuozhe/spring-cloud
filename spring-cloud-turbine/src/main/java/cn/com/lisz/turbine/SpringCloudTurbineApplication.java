@@ -1,4 +1,4 @@
-package cn.com.micro.turbine;
+package cn.com.lisz.turbine;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
