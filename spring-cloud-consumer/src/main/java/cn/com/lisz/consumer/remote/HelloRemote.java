@@ -1,10 +1,10 @@
-package cn.com.micro.consumer.remote;
+package cn.com.lisz.consumer.remote;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cn.com.micro.consumer.remote.hystrix.HelloRemoteHystrix;
+import cn.com.lisz.consumer.remote.hystrix.HelloRemoteHystrix;
 
 @FeignClient(name = "spring-cloud-producer", fallback = HelloRemoteHystrix.class)
 public interface HelloRemote {

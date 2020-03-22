@@ -1,4 +1,4 @@
-package cn.com.micro.consumer;
+package cn.com.lisz.consumer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

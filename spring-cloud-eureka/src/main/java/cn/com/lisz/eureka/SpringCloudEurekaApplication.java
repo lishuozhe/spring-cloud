@@ -1,4 +1,4 @@
-package cn.com.micro.eureka;
+package cn.com.lisz.eureka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
