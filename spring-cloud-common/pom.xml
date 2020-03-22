@@ -10,7 +10,7 @@
 	<name>spring-cloud-common</name>
 	<url>http://maven.apache.org</url>
 	<description>通用模块</description>
-	
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>

@@ -3,9 +3,9 @@ package cn.com.lisz.zuul;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Bean;
 
-import cn.com.lisz.zuul.filter.TokenFilter;
+//import cn.com.lisz.zuul.filter.TokenFilter;
 
 @SpringBootApplication
 @EnableZuulProxy
@@ -15,8 +15,8 @@ public class SpringCloudZuulApplication {
 		SpringApplication.run(SpringCloudZuulApplication.class, args);
 	}
 
-	@Bean
-	public TokenFilter tokenFilter() {
-		return new TokenFilter();
-	}
+//	@Bean
+//	public TokenFilter tokenFilter() {
+//		return new TokenFilter();
+//	}
 }

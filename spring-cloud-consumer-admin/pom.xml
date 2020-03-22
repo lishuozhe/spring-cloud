@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cn.com.lisz</groupId>
-	<artifactId>spring-cloud-zuul</artifactId>
+	<artifactId>spring-cloud-consumer-admin</artifactId>
 	<version>1.0</version>
-	<name>spring-cloud-zuul</name>
+	<name>spring-cloud-consumer-admin</name>
 	<url>http://maven.apache.org</url>
-	<description>服务网关</description>
+	<description>消费者-后台管理模块</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -27,21 +27,39 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>cn.com.lisz</groupId>
+			<artifactId>spring-cloud-common</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zuul</artifactId>
+			<artifactId>spring-cloud-starter-feign</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.retry</groupId>
-			<artifactId>spring-retry</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-hystrix</artifactId>
+		</dependency>
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency> -->
 		<!-- <dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-zipkin</artifactId>
 		</dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -57,7 +75,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>spring-cloud-zuul</finalName>
+		<finalName>spring-cloud-consumer</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

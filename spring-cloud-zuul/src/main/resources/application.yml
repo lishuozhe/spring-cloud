@@ -6,11 +6,11 @@ spring:
   application:
     name: spring-cloud-zuul
   profiles: dev
-  zipkin:
-    base-url: http://localhost:8300
-  sleuth:
-    sampler:
-      percentage: 1.0
+  #zipkin:
+    #base-url: http://localhost:8300
+  #sleuth:
+    #sampler:
+      #percentage: 1.0
 server:
   port: 8888
   
@@ -18,11 +18,26 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8000/eureka/
+
+# 构建路由地址
+zuul:
+  prefix: /apis
+  #忽略真实服务名称
+  ignored-services: spring-cloud-*
+  routes:
+    # 这里可以自定义
+    admin:
+      # 匹配的路由规则
+      path: /admin/**
+      # 路由的目标服务名
+      serviceId: spring-cloud-consumer-admin
 #是否开启重试功能
-zuul: 
   retryable: true
 #对当前服务的重试次数
 ribbon:
   MaxAutoRetries: 2
 #切换相同Server的次数
   MaxAutoRetriesNextServer: 0
+management:
+  security:
+    enabled: true # 默认为true，改为false以便可以看到routes

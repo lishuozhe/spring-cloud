@@ -1,16 +1,14 @@
-package cn.com.micro.config;
+package cn.com.lisz.producer.base;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.config.server.EnableConfigServer;
 
-@EnableConfigServer
-@EnableDiscoveryClient
 @SpringBootApplication
-public class SpringCloudConfigApplication {
+@EnableDiscoveryClient
+public class SpringCloudProducerBaseApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringCloudConfigApplication.class, args);
+		SpringApplication.run(SpringCloudProducerBaseApplication.class, args);
 	}
 }
