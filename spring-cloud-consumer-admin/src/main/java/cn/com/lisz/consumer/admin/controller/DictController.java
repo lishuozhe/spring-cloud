@@ -1,9 +1,9 @@
-package cn.com.lisz.consumer.controller;
+package cn.com.lisz.consumer.admin.controller;
 
 import cn.com.lisz.common.model.BasePage;
 import cn.com.lisz.common.model.BaseResult;
-import cn.com.lisz.consumer.entity.Dict;
-import cn.com.lisz.consumer.remote.DictRemote;
+import cn.com.lisz.consumer.admin.entity.Dict;
+import cn.com.lisz.consumer.admin.remote.DictRemote;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

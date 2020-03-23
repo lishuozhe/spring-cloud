@@ -48,6 +48,17 @@
 //			ctx.set("isSuccess", false);
 //			return null;
 //		}
+//RequestContext context = RequestContext.getCurrentContext();
+//        HttpServletRequest request = context.getRequest();
+//        String token = request.getHeader("token");
+//        if (StringUtils.isEmpty(token)) {
+//            //返回错误信息
+//            context.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+//            context.setResponseBody(HttpStatus.UNAUTHORIZED.getReasonPhrase());
+//            context.setSendZuulResponse(false);
+//            return null;
+//        }
+//        return null;
 //	}
 //
 //}

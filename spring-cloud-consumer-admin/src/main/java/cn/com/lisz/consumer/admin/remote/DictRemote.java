@@ -1,4 +1,4 @@
-package cn.com.lisz.consumer.remote;
+package cn.com.lisz.consumer.admin.remote;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.com.lisz.common.model.BasePage;
-import cn.com.lisz.consumer.entity.Dict;
-import cn.com.lisz.consumer.remote.hystrix.DictRemoteHystrix;
+import cn.com.lisz.consumer.admin.entity.Dict;
+import cn.com.lisz.consumer.admin.remote.hystrix.DictRemoteHystrix;
 
 @FeignClient(name = "spring-cloud-producer-base", fallback = DictRemoteHystrix.class)
 public interface DictRemote {

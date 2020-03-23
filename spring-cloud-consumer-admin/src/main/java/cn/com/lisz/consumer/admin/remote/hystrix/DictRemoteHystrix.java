@@ -1,12 +1,12 @@
-package cn.com.lisz.consumer.remote.hystrix;
+package cn.com.lisz.consumer.admin.remote.hystrix;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.com.lisz.common.model.BasePage;
-import cn.com.lisz.consumer.entity.Dict;
-import cn.com.lisz.consumer.remote.DictRemote;
+import cn.com.lisz.consumer.admin.entity.Dict;
+import cn.com.lisz.consumer.admin.remote.DictRemote;
 
 @Component
 public class DictRemoteHystrix implements DictRemote {

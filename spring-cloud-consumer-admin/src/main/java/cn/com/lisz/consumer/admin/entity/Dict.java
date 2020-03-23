@@ -1,4 +1,4 @@
-package cn.com.lisz.consumer.entity;
+package cn.com.lisz.consumer.admin.entity;
 
 import cn.com.lisz.common.model.BaseModel;
 import java.util.Date;
