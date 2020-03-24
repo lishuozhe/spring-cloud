@@ -65,6 +65,11 @@
 	        <artifactId>swagger-spring-boot-starter</artifactId>
 	        <version>1.7.0.RELEASE</version>
 	    </dependency>
+	    <!-- security oauth2 start -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-oauth2</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -80,7 +85,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>spring-cloud-consumer</finalName>
+		<finalName>spring-cloud-consumer-admin</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

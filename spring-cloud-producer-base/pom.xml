@@ -106,7 +106,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>spring-cloud-producer</finalName>
+		<finalName>spring-cloud-producer-base</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

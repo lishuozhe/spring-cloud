@@ -23,6 +23,7 @@ eureka:
 zuul:
   #忽略真实服务名称
   ignored-services: spring-cloud-*
+  sensitive-headers: Set-Cookie、Cookie、Host、Connection、Content-Length、Content-Encoding、Server、Transfer-Encoding、X-Application-Context
   routes:
     # 这里可以自定义
     admin:
@@ -30,6 +31,11 @@ zuul:
       path: /admin/**
       # 路由的目标服务名
       serviceId: spring-cloud-consumer-admin
+    oauth:
+      # 匹配的路由规则
+      path: /oauth/**
+      # 路由的目标服务名
+      serviceId: spring-cloud-consumer-oauth
 #是否开启重试功能
   retryable: true
 #对当前服务的重试次数

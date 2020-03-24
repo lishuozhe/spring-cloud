@@ -4,7 +4,7 @@ spring:
 ---     
 spring: 
   application:
-    name: spring-cloud-consumer-admin
+    name: spring-cloud-consumer-oauth
   profiles: dev
   #zipkin:
     #base-url: http://localhost:8300
@@ -12,7 +12,7 @@ spring:
     #sampler:
       #percentage: 1.0
 server:
-  port: 9100
+  port: 10000
   
 eureka: 
   client:
@@ -24,7 +24,15 @@ eureka:
     #enabled: false
 swagger: 
   base-package: cn.com.lisz.consumer.admin.controller
-security: 
-  oauth2: 
-    resource: 
-      token-info-uri: http://localhost:10000/oauth/check_token
+  
+# JWT
+jwt:
+  header: Authorization
+  secret: MallDb52
+  expiration: 604800
+  tokenHead: "Bearer "
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+      register: "auth/register"
