@@ -26,7 +26,7 @@ public class OAuth2ResourceConfig extends ResourceServerConfigurerAdapter {
 		// @formatter:off
 		http.authorizeRequests()
 				// 允许一些资源可以访问
-				.antMatchers(HttpMethod.GET, "/", "/swagger-resources/**", "/v2/api-docs/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/", "/swagger-ui.html","/swagger-resources/**", "/v2/api-docs/**").permitAll()
 				// 允许一些URL可以访问
 				// .antMatchers(settings.getPermital().split(",")).permitAll()
 				// 跨站请求伪造，这是一个放置跨站请求伪造的攻击的策略设置
