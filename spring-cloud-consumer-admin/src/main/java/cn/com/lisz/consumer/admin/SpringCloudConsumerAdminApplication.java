@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import com.spring4all.swagger.EnableSwagger2Doc;
 
 @EnableSwagger2Doc
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cn.com.lisz")
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableCircuitBreaker

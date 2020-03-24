@@ -32,6 +32,11 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
+			<groupId>cn.com.lisz</groupId>
+			<artifactId>spring-cloud-common-oauth</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-feign</artifactId>
 		</dependency>
@@ -65,11 +70,6 @@
 	        <artifactId>swagger-spring-boot-starter</artifactId>
 	        <version>1.7.0.RELEASE</version>
 	    </dependency>
-	    <!-- security oauth2 start -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-oauth2</artifactId>
-		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

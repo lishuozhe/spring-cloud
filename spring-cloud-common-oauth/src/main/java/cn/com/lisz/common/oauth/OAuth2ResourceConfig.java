@@ -1,4 +1,4 @@
-package cn.com.lisz.consumer.admin.auth;
+package cn.com.lisz.common.oauth;
 
 import javax.servlet.http.HttpServletResponse;
 
