@@ -26,7 +26,7 @@ zuul:
       serviceId: spring-cloud-consumer-admin
     security:
       # 匹配的路由规则
-      path: /oauth/**
+      path: /security/**
       # 路由的目标服务名
       serviceId: spring-cloud-consumer-oauth
   #是否开启重试功能
@@ -37,6 +37,11 @@ ribbon:
   #切换相同Server的次数
   MaxAutoRetriesNextServer: 0
 
+# 认证
+auth:
+  client_id: 4356a818-2fad-499e-8c61-62d33a5735ed
+  client_secret: 068v7AgVF057Il5iF3Bz8uW245TW77
+  
 # log
 logging: 
   level: 
