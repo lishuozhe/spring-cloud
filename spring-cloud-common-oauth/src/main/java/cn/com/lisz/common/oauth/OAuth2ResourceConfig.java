@@ -2,6 +2,7 @@ package cn.com.lisz.common.oauth;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,12 +22,16 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class OAuth2ResourceConfig extends ResourceServerConfigurerAdapter {
 
+	@Value("${auth.secret}")
+	private String secret;
+
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		// @formatter:off
 		http.authorizeRequests()
 				// 允许一些资源可以访问
-				.antMatchers(HttpMethod.GET, "/", "/swagger-ui.html","/swagger-resources/**", "/v2/api-docs/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/", "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs/**")
+				.permitAll()
 				// 允许一些URL可以访问
 				// .antMatchers(settings.getPermital().split(",")).permitAll()
 				// 跨站请求伪造，这是一个放置跨站请求伪造的攻击的策略设置
@@ -66,7 +71,7 @@ public class OAuth2ResourceConfig extends ResourceServerConfigurerAdapter {
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		converter.setSigningKey("fyk123");
+		converter.setSigningKey(secret);
 		return converter;
 	}
 

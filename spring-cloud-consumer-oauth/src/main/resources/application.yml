@@ -1,38 +1,79 @@
+server:
+  port: 10000
+  
 spring:
-    profiles:
-        active: dev
----     
-spring: 
   application:
     name: spring-cloud-consumer-oauth
+  profiles:
+    active: dev
+    
+eureka: 
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${cloud.server.port}/eureka
+
+# 认证
+auth:
+  secret: 212520
+  accessTokenValiditySecond: 7200
+  refreshTokenValiditySecond: 8640000
+  client_id: 4356a818-2fad-499e-8c61-62d33a5735ed
+  client_secret: 068v7AgVF057Il5iF3Bz8uW245TW77
+ 
+# log
+logging: 
+  level: 
+    com: 
+      netflix: 
+        eureka: OFF
+        discovery: OFF
+  file: ./logs/${spring.application.name}.log     
+---     
+spring: 
   profiles: dev
+  
+# cloud
+cloud: 
+  server: 
+    port: 8000 
+eureka: 
+  instance: 
+    # 注册中心地址
+    hostname: localhost
+    # 服务部署地址
+    ip-address: 127.0.0.1
+
+logging: 
+  level: 
+    root: INFO
+---     
+spring: 
+  profiles: prod
+
+# cloud
+cloud: 
+  server: 
+    port: 8000
+eureka: 
+  instance: 
+    # 注册中心地址
+    hostname: localhost
+    # 服务部署地址
+    ip-address: 127.0.0.1
+    
+logging: 
+  level: 
+    root: WARN  
+---   
+
+#spring: 
   #zipkin:
     #base-url: http://localhost:8300
   #sleuth:
     #sampler:
       #percentage: 1.0
-server:
-  port: 10000
-  
-eureka: 
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8000/eureka/
       
 #feign: 
   #hystrix: 
     #enabled: false
-swagger: 
-  base-package: cn.com.lisz.consumer.admin.controller
   
-# JWT
-jwt:
-  header: Authorization
-  secret: MallDb52
-  expiration: 604800
-  tokenHead: "Bearer "
-  route:
-    authentication:
-      path: auth
-      refresh: refresh
-      register: "auth/register"

@@ -1,23 +1,16 @@
-spring:
-    profiles:
-        active: dev
----     
-spring: 
-  application:
-    name: spring-cloud-zuul
-  profiles: dev
-  #zipkin:
-    #base-url: http://localhost:8300
-  #sleuth:
-    #sampler:
-      #percentage: 1.0
 server:
   port: 8888
   
+spring:
+  application:
+    name: spring-cloud-zuul
+    profiles:
+        active: dev
+     
 eureka: 
   client:
     serviceUrl:
-      defaultZone: http://localhost:8000/eureka/
+      defaultZone: http://localhost:8000/eureka
 
 # 构建路由地址
 zuul:
@@ -31,18 +24,48 @@ zuul:
       path: /admin/**
       # 路由的目标服务名
       serviceId: spring-cloud-consumer-admin
-    oauth:
+    security:
       # 匹配的路由规则
       path: /oauth/**
       # 路由的目标服务名
       serviceId: spring-cloud-consumer-oauth
-#是否开启重试功能
+  #是否开启重试功能
   retryable: true
 #对当前服务的重试次数
 ribbon:
   MaxAutoRetries: 2
-#切换相同Server的次数
+  #切换相同Server的次数
   MaxAutoRetriesNextServer: 0
-management:
-  security:
-    enabled: false # 默认为true，改为false以便可以看到routes
+
+# log
+logging: 
+  level: 
+    com: 
+      netflix: 
+        eureka: OFF
+        discovery: OFF
+  file: ./logs/${spring.application.name}.log 
+--- 
+spring: 
+  profiles: dev
+
+     
+logging: 
+  level: 
+    root: INFO
+---  
+spring: 
+  profiles: prod
+  
+   
+logging: 
+  level: 
+    root: WARN 
+---
+#spring: 
+  #zipkin:
+    #base-url: http://localhost:8300
+  #sleuth:
+    #sampler:
+      #percentage: 1.0
+

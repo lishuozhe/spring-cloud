@@ -4,37 +4,27 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>cn.com.lisz</groupId>
 	<artifactId>spring-cloud-common-oauth</artifactId>
-	<version>1.0</version>
+	
 	<name>spring-cloud-common-oauth</name>
-	<url>http://maven.apache.org</url>
 	<description>通用模块-认证</description>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.3.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<groupId>cn.com.lisz</groupId>
+		<artifactId>spring-cloud</artifactId>
+		<version>1.0</version>
 	</parent>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<spring-cloud.version>Dalston.SR1</spring-cloud.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
 		<!-- security oauth2 start -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-oauth2</artifactId>
-			<version>1.2.1.RELEASE</version>
 		</dependency>
 	</dependencies>
 

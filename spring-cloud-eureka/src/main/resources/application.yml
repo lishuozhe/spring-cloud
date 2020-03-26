@@ -1,61 +1,55 @@
-#  默认的profile为eureka，单节点。多节点通过指定启动参数使用不同的profile，比如：  
-#  节点1：java -jar spring-cloud-eureka.jar --spring.profiles.active=eureka1 
-#  节点2：java -jar spring-cloud-eureka.jar --spring.profiles.active=eureka2
-#  节点3：java -jar spring-cloud-eureka.jar --spring.profiles.active=eureka3
-
-spring:
-    profiles:
-        active: eureka
----     
-spring: 
-  application:
-    name: spring-cloud-eureka
-  profiles: eureka
 server:
   port: 8000
   
+spring:
+  application:
+    name: spring-cloud-eureka
+  profiles:
+    active: dev
+    
 eureka: 
   client:
+    #禁止自己当做服务注册
     register-with-eureka: false
+    #屏蔽注册信息
     fetch-registry: false
     serviceUrl:
-      defaultZone: http://localhost:${server.port}/eureka/
----
-spring:
-  application:
-    name: spring-cloud-eureka
-  profiles: eureka1
-server:
-  port: 8000
-eureka:
-  instance:
+      #部署多个注册中心时，这里配置其他配置中心的地址。如：http://localhost:8001/eureka/,http://localhost:8002/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      
+# log
+logging: 
+  level: 
+    com: 
+      netflix: 
+        eureka: OFF
+        discovery: OFF
+  file: ./logs/${spring.application.name}.log
+
+---     
+spring: 
+  profiles: dev
+
+eureka: 
+  instance: 
     hostname: localhost
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8001/eureka/,http://localhost:8002/eureka/
----
-spring:
-  application:
-    name: spring-cloud-eureka
-  profiles: eureka2
-server:
-  port: 8001
-eureka:
-  instance:
+    ip-address: 127.0.0.1
+
+logging: 
+  level: 
+    root: INFO
+---    
+spring: 
+  profiles: prod
+
+eureka: 
+  instance: 
     hostname: localhost
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8000/eureka/,http://localhost:8002/eureka/
----
-spring:
-  application:
-    name: spring-cloud-eureka
-  profiles: eureka3
-server:
-  port: 8002
-eureka:
-  instance:
-    hostname: localhost
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8000/eureka/,http://localhost:8001/eureka/
+    ip-address: 127.0.0.1
+
+logging: 
+  level: 
+    root: WARN
+---   
+
+

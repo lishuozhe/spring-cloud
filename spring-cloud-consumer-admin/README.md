@@ -2,8 +2,10 @@
 spring-cloud微服务架构
 
 ### 服务消费者
-后台管理业务模块，不使用数据库，调用需要的服务实现业务，不直接对外提供访问，通过网关路由访问
+```
+后台管理，负责维护角色、权限、字典等数据
+```
 
-http://localhost:9100/dict/1
+- 接口访问示例: http://localhost:9100/dict/1
 
-http://localhost:9100/swagger-ui.html#/
+- 接口文档地址: http://localhost:9100/swagger-ui.html#/

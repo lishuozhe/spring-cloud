@@ -2,6 +2,7 @@ package cn.com.lisz.consumer.oauth.config;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -29,21 +30,26 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableAuthorizationServer
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
+	@Value("${auth.secret}")
+	private String secret;
+	@Value("${auth.client_id}")
+	private String clientId;
+	@Value("${auth.client_secret}")
+	private String clientSecret;
 	// accessToken 过期
-	private int accessTokenValiditySecond = 60 * 60 * 2; // 2小时
-	private int refreshTokenValiditySecond = 60 * 60 * 24 * 7; // 7 天
+	@Value("${auth.accessTokenValiditySecond}")
+	private int accessTokenValiditySecond;
+	@Value("${auth.refreshTokenValiditySecond}")
+	private int refreshTokenValiditySecond;
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		// clients.withClientDetails(clientDetailsService);
-		clients.inMemory().withClient("yyy_client").secret(passwordEncoder().encode("yyy_secret"))
-				.authorizedGrantTypes("password", "client_credentials", "refresh_token").scopes("all") // 设置权限类型,
-																										// 用密码，客户端,
-																										// 刷新的token
-																										// 权限为所有人
+		clients.inMemory().withClient(clientId).secret(passwordEncoder().encode(clientSecret))
+				// 设置权限类型, 用密码，客户端, 刷新的token 权限为所有人
+				.authorizedGrantTypes("password", "client_credentials", "refresh_token").scopes("all")
 				.accessTokenValiditySeconds(accessTokenValiditySecond)
 				.refreshTokenValiditySeconds(refreshTokenValiditySecond);
-
 	}
 
 	@Override
@@ -112,7 +118,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 		// 设置设置JWT签名密钥
-		converter.setSigningKey("fyk123");
+		converter.setSigningKey(secret);
 		return converter;
 	}
 

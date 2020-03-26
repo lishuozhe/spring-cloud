@@ -8,13 +8,16 @@
 	<version>1.0</version>
 	<packaging>pom</packaging>
 
-	<name>spring-cloud</name>
-	<url>http://maven.apache.org</url>
+	<name>cn.com.lisz.spring-cloud</name>
+	<description>微服务架构</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+
+		<spring-boot.version>2.0.3.RELEASE</spring-boot.version>
+		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
 	</properties>
 
 
@@ -43,4 +46,23 @@
 		<module>spring-cloud-zuul</module>
 		<module>spring-cloud-zipkin</module>
 	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
