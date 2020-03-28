@@ -36,6 +36,8 @@
 
 	<modules>
 		<module>spring-cloud-common</module>
+		<module>spring-cloud-common-model</module>
+		<module>spring-cloud-common-data</module>
 		<module>spring-cloud-common-oauth</module>
 		<module>spring-cloud-eureka</module>
 		<module>spring-cloud-producer-base</module>

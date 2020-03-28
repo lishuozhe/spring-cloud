@@ -1,12 +1,19 @@
 package cn.com.lisz.consumer.admin.controller;
 
-import cn.com.lisz.common.model.BasePage;
-import cn.com.lisz.common.model.BaseResult;
-import cn.com.lisz.consumer.admin.entity.Dict;
+import cn.com.lisz.common.model.base.DictModel;
+import cn.com.lisz.common.model.web.DelModel;
+import cn.com.lisz.common.model.web.EditModel;
+import cn.com.lisz.common.model.web.FindModel;
+import cn.com.lisz.common.model.web.GetModel;
+import cn.com.lisz.common.model.web.PaggingModel;
+import cn.com.lisz.common.model.web.RequestCondition;
+import cn.com.lisz.common.model.web.ResultModel;
 import cn.com.lisz.consumer.admin.remote.DictRemote;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,56 +34,72 @@ public class DictController {
 	@Autowired
 	DictRemote dictRemote;
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public BaseResult<Dict> save(@Validated @RequestBody Dict record) {
-		BaseResult<Dict> result = new BaseResult<Dict>();
-		int n = dictRemote.save(record);
-		if (n == 1) {
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public ResultModel<DictModel> add(@RequestBody DictModel model) {
+		ResultModel<DictModel> result = new ResultModel<DictModel>();
+		Long id = dictRemote.add(model);
+		if (id != null) {
 			return result.success();
 		}
 		return result.failed();
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public BaseResult<Dict> delete(@PathVariable("id") Long id) {
-		BaseResult<Dict> result = new BaseResult<Dict>();
-		int n = dictRemote.delete(id);
-		if (n == 1) {
+	@RequestMapping(value = "/del", method = RequestMethod.DELETE)
+	public ResultModel<DictModel> delete(@RequestBody List<Long> ids) {
+		ResultModel<DictModel> result = new ResultModel<DictModel>();
+		boolean b = dictRemote.del(new DelModel<Long>(ids, null));
+		if (b) {
 			return result.success();
 		}
 		return result.failed();
 	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public BaseResult<Dict> update(@Validated @RequestBody Dict record) {
-		BaseResult<Dict> result = new BaseResult<Dict>();
-		int n = dictRemote.update(record);
-		if (n == 1) {
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public ResultModel<DictModel> edit(@RequestBody DictModel model) {
+		ResultModel<DictModel> result = new ResultModel<DictModel>();
+		boolean b = dictRemote.edit(new EditModel<DictModel>(model, null));
+		if (b) {
 			return result.success();
 		}
 		return result.failed();
 	}
 
-	@RequestMapping(value = "/page", method = RequestMethod.POST)
-	public BaseResult<BasePage<Dict>> page(@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum, @RequestBody Dict record) {
-		BaseResult<BasePage<Dict>> result = new BaseResult<BasePage<Dict>>();
-		BasePage<Dict> page = dictRemote.page(pageSize, pageNum, record);
-		if (record != null) {
-			return result.success(page);
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResultModel<DictModel> get(@PathVariable("id") Long id) {
+		ResultModel<DictModel> result = new ResultModel<DictModel>();
+		DictModel model = dictRemote.get(new GetModel<Long>(id, null));
+		if (model != null) {
+			return result.success(model);
 		}
 		return result.noData();
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public BaseResult<Dict> get(@PathVariable("id") Long id) {
-		BaseResult<Dict> result = new BaseResult<Dict>();
-		Dict record = new Dict();
-		record.setId(id);
-		record.setDelFlag("0");
-		record = dictRemote.listOne(record);
-		if (record != null) {
-			return result.success(record);
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	public ResultModel<List<DictModel>> list(@RequestBody DictModel model) {
+		ResultModel<List<DictModel>> result = new ResultModel<List<DictModel>>();
+		List<RequestCondition> conditions = new ArrayList<RequestCondition>();
+		if (model.getLabel() != null) {
+			conditions.add(new RequestCondition("label", model.getLabel()));
+		}
+
+		List<DictModel> models = dictRemote.list(new FindModel(conditions, null));
+		if (models != null && models.size() > 0) {
+			return result.success(models);
+		}
+		return result.noData();
+	}
+
+	@RequestMapping(value = "/page", method = RequestMethod.POST)
+	public ResultModel<PaggingModel<DictModel>> page(@RequestParam(value = "pageSize", defaultValue = "5") Integer size,
+			@RequestParam(value = "pageNum", defaultValue = "1") Integer page, @RequestBody DictModel model) {
+		ResultModel<PaggingModel<DictModel>> result = new ResultModel<PaggingModel<DictModel>>();
+		List<RequestCondition> conditions = new ArrayList<RequestCondition>();
+		if (model.getLabel() != null) {
+			conditions.add(new RequestCondition("label", model.getLabel()));
+		}
+		PaggingModel<DictModel> pageModel = dictRemote.page(size, page, new FindModel(conditions, null));
+		if (pageModel != null) {
+			return result.success(pageModel);
 		}
 		return result.noData();
 	}

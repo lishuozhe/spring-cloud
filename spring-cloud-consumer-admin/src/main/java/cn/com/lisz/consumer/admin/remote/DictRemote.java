@@ -1,34 +1,108 @@
 package cn.com.lisz.consumer.admin.remote;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cn.com.lisz.common.model.BasePage;
-import cn.com.lisz.consumer.admin.entity.Dict;
+import cn.com.lisz.common.model.base.DictModel;
+import cn.com.lisz.common.model.web.DelModel;
+import cn.com.lisz.common.model.web.EditModel;
+import cn.com.lisz.common.model.web.FindModel;
+import cn.com.lisz.common.model.web.GetModel;
+import cn.com.lisz.common.model.web.PaggingModel;
 import cn.com.lisz.consumer.admin.remote.hystrix.DictRemoteHystrix;
 
-@FeignClient(name = "spring-cloud-producer-base", fallback = DictRemoteHystrix.class)
+@FeignClient(name = "spring-cloud-producer-base",path = "/dict", fallback = DictRemoteHystrix.class)
 public interface DictRemote {
 
-	@RequestMapping(value = "/dict/get")
-	public Dict get(@RequestParam(value = "id") Long id);
+	/**
+	 * 新增
+	 *
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public Long add(@RequestBody DictModel model);
 
-	@RequestMapping(value = "/dict/listOne", method = RequestMethod.POST)
-	public Dict listOne(@RequestBody Dict record);
+	/**
+	 * 删除
+	 *
+	 * @param ids
+	 * @param userModel,
+	 *            传递处理用户创建的数据
+	 * @return
+	 */
+	@RequestMapping(value = "/del", method = RequestMethod.POST)
+	public boolean del(@RequestBody DelModel<Long> model);
 
-	@RequestMapping(value = "/dict/save", method = RequestMethod.POST)
-	public int save(@RequestBody Dict record);
+	/**
+	 * 更新
+	 *
+	 * @param model
+	 * @param userModel,
+	 *            传递处理用户创建的数据
+	 * @return
+	 */
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public boolean edit(@RequestBody EditModel<DictModel> model);
 
-	@RequestMapping(value = "/dict/delete", method = RequestMethod.POST)
-	public int delete(@RequestParam(value = "id") Long id);
+	/**
+	 * 查看
+	 * 
+	 * @param id
+	 * @param userModel,
+	 *            传递处理用户创建的数据
+	 * @return
+	 */
+	@RequestMapping(value = "/get", method = RequestMethod.POST)
+	public DictModel get(@RequestBody GetModel<Long> model);
 
-	@RequestMapping(value = "/dict/update", method = RequestMethod.POST)
-	public int update(@RequestBody Dict record);
+	/**
+	 * 条件查看
+	 * 
+	 * @param conditions
+	 * @param userModel,
+	 *            传递处理用户创建的数据
+	 * @return
+	 */
+	@RequestMapping(value = "/findOne", method = RequestMethod.POST)
+	public DictModel findOne(@RequestBody FindModel model);
 
-	@RequestMapping(value = "/dict/page", method = RequestMethod.POST)
-	public BasePage<Dict> page(@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum, @RequestBody Dict record);
+	/**
+	 * 判断存在
+	 * 
+	 * @param conditions
+	 * @param userModel,
+	 *            传递处理用户创建的数据
+	 * @return
+	 */
+	@RequestMapping(value = "/exist", method = RequestMethod.POST)
+	public boolean exist(@RequestBody FindModel model);
+
+	/**
+	 * 条件查询
+	 * 
+	 * @param conditions
+	 * @param userModel,
+	 *            传递处理用户创建的数据
+	 * @return
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	public List<DictModel> list(@RequestBody FindModel model);
+
+	/**
+	 * 分页查询
+	 * 
+	 * @param conditions
+	 * @param userModel,
+	 *            传递处理用户创建的数据
+	 * @return
+	 */
+	@RequestMapping(value = "/page", method = RequestMethod.POST)
+	public PaggingModel<DictModel> page(@RequestParam(value = "pageSize", defaultValue = "5") Integer size,
+			@RequestParam(value = "pageNum", defaultValue = "1") Integer page, @RequestBody FindModel model);
 }

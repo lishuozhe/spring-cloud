@@ -4,10 +4,10 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>spring-cloud-common</artifactId>
+	<artifactId>spring-cloud-common-model</artifactId>
 
 	<name>spring-cloud-common-model</name>
-	<description>通用模块</description>
+	<description>通用模块-模型</description>
 
 	<parent>
 		<groupId>cn.com.lisz</groupId>
@@ -16,7 +16,11 @@
 	</parent>
 
 	<dependencies>
-	
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

@@ -81,8 +81,9 @@ public class SpringCloudZuulApplication {
 				grantType = GRANT_TYPE_PASSWORD_REFRESH_TOKEN;
 			}
 			Map<String, List<String>> requestQueryParams = requestContext.getRequestQueryParams();
-			if (requestQueryParams == null)
+			if (requestQueryParams == null) {
 				requestQueryParams = new HashMap<>();
+			}
 			// 4、将要新增的参数添加进去,被调用的微服务可以直接去取,就想普通的一样,框架会直接注入进去
 			ArrayList<String> paramsList = new ArrayList<>();
 			paramsList.add(grantType);

@@ -1,45 +1,68 @@
 package cn.com.lisz.consumer.admin.remote.hystrix;
 
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import java.util.List;
 
-import cn.com.lisz.common.model.BasePage;
-import cn.com.lisz.consumer.admin.entity.Dict;
+import org.springframework.stereotype.Component;
+
+import cn.com.lisz.common.model.base.DictModel;
+import cn.com.lisz.common.model.web.DelModel;
+import cn.com.lisz.common.model.web.EditModel;
+import cn.com.lisz.common.model.web.FindModel;
+import cn.com.lisz.common.model.web.GetModel;
+import cn.com.lisz.common.model.web.PaggingModel;
 import cn.com.lisz.consumer.admin.remote.DictRemote;
 
 @Component
 public class DictRemoteHystrix implements DictRemote {
 
 	@Override
-	public Dict get(@RequestParam(value = "id") Long id) {
+	public Long add(DictModel model) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Dict listOne(@RequestBody Dict record) {
+	public boolean del(DelModel<Long> model) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean edit(EditModel<DictModel> model) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public DictModel get(GetModel<Long> model) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int save(@RequestBody Dict record) {
-		return 0;
-	}
-
-	@Override
-	public int delete(@RequestParam(value = "id") Long id) {
-		return 0;
-	}
-
-	@Override
-	public int update(@RequestBody Dict record) {
-		return 0;
-	}
-
-	@Override
-	public BasePage<Dict> page(@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum, @RequestBody Dict record) {
+	public DictModel findOne(FindModel model) {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean exist(FindModel model) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<DictModel> list(FindModel model) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PaggingModel<DictModel> page(Integer size, Integer page, FindModel model) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

@@ -6,6 +6,4 @@ spring-cloud微服务架构
 后台管理，负责维护角色、权限、字典等数据
 ```
 
-- 接口访问示例: http://localhost:9100/dict/1
-
 - 接口文档地址: http://localhost:9100/swagger-ui.html#/

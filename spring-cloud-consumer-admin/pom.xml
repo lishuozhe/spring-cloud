@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.com.lisz</groupId>
-			<artifactId>spring-cloud-common</artifactId>
+			<artifactId>spring-cloud-common-model</artifactId>
 			<version>1.0</version>
 		</dependency>
 		<dependency>
