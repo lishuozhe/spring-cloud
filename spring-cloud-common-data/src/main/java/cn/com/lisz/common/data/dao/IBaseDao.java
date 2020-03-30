@@ -361,7 +361,6 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 			List<RequestCondition> conditions, Function<TEntity, TModel> mapper) {
 		Objects.requireNonNull(entityType, "实体类型不能为NULL");
 		Objects.requireNonNull(mapper, "类型转换处理不能为NULL");
-
 		return findAll(getSpecification(entityType, conditions)).stream().map(mapper).collect(toList());
 	}
 

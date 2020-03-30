@@ -24,7 +24,9 @@ public class RequestCondition {
 	/**
 	 * 查询数值
 	 */
-	String value;
-	
-	
+	Object value;
+
+	public String toString() {
+		return type + "=" + value;
+	}
 }

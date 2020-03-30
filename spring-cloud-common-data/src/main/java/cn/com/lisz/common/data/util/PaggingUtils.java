@@ -141,9 +141,9 @@ public class PaggingUtils {
 			List<Sort.Order> orders = new ArrayList<>();
 
 			orderConditions.forEach(a -> {
-				if (EntityUtils.existEntryField(entityType, a.getValue())) {
-					orders.add(KEY_ASC_ORDER.equalsIgnoreCase(a.getType()) ? Sort.Order.asc(a.getValue())
-							: Sort.Order.desc(a.getValue()));
+				if (EntityUtils.existEntryField(entityType, a.getValue().toString())) {
+					orders.add(KEY_ASC_ORDER.equalsIgnoreCase(a.getType()) ? Sort.Order.asc(a.getValue().toString())
+							: Sort.Order.desc(a.getValue().toString()));
 				}
 			});
 

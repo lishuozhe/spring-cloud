@@ -5,11 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import cn.com.lisz.common.model.base.DictModel;
-import cn.com.lisz.common.model.web.DelModel;
-import cn.com.lisz.common.model.web.EditModel;
-import cn.com.lisz.common.model.web.FindModel;
-import cn.com.lisz.common.model.web.GetModel;
 import cn.com.lisz.common.model.web.PaggingModel;
+import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.consumer.admin.remote.DictRemote;
 
 @Component
@@ -22,47 +19,45 @@ public class DictRemoteHystrix implements DictRemote {
 	}
 
 	@Override
-	public boolean del(DelModel<Long> model) {
+	public boolean del(List<RequestCondition> conditions) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean edit(EditModel<DictModel> model) {
+	public boolean edit(DictModel model) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public DictModel get(GetModel<Long> model) {
+	public DictModel get(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public DictModel findOne(FindModel model) {
+	public DictModel findOne(List<RequestCondition> conditions) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean exist(FindModel model) {
+	public boolean exist(List<RequestCondition> conditions) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<DictModel> list(FindModel model) {
+	public List<DictModel> list(List<RequestCondition> conditions) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PaggingModel<DictModel> page(Integer size, Integer page, FindModel model) {
+	public PaggingModel<DictModel> page(Integer size, Integer page, List<RequestCondition> conditions) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 
 }

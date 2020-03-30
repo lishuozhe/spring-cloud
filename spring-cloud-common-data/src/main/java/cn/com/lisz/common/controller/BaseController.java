@@ -68,7 +68,7 @@ public class BaseController<TEntity extends BaseEntity, ID extends Serializable,
 	 * @return
 	 */
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public TModel get(@RequestParam ID id) {
+	public TModel get(@RequestParam(value = "id") ID id) {
 		return service.get(id);
 	}
 
@@ -133,9 +133,6 @@ public class BaseController<TEntity extends BaseEntity, ID extends Serializable,
 	public PaggingModel<TModel> page(@RequestParam(value = "pageSize", defaultValue = "5") Integer size,
 			@RequestParam(value = "pageNum", defaultValue = "1") Integer page,
 			@RequestBody List<RequestCondition> conditions) {
-		if (!CollectionUtils.isEmpty(conditions)) {
-			return service.pagging(conditions, page, size);
-		}
-		return null;
+		return service.pagging(conditions, page, size);
 	}
 }

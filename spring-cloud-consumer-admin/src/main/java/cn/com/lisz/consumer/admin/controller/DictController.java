@@ -1,10 +1,6 @@
 package cn.com.lisz.consumer.admin.controller;
 
 import cn.com.lisz.common.model.base.DictModel;
-import cn.com.lisz.common.model.web.DelModel;
-import cn.com.lisz.common.model.web.EditModel;
-import cn.com.lisz.common.model.web.FindModel;
-import cn.com.lisz.common.model.web.GetModel;
 import cn.com.lisz.common.model.web.PaggingModel;
 import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.common.model.web.ResultModel;
@@ -47,7 +43,11 @@ public class DictController {
 	@RequestMapping(value = "/del", method = RequestMethod.DELETE)
 	public ResultModel<DictModel> delete(@RequestBody List<Long> ids) {
 		ResultModel<DictModel> result = new ResultModel<DictModel>();
-		boolean b = dictRemote.del(new DelModel<Long>(ids, null));
+		List<RequestCondition> conditions = new ArrayList<RequestCondition>();
+		for (Long id : ids) {
+			conditions.add(new RequestCondition("in_id", id));
+		}
+		boolean b = dictRemote.del(conditions);
 		if (b) {
 			return result.success();
 		}
@@ -57,7 +57,7 @@ public class DictController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ResultModel<DictModel> edit(@RequestBody DictModel model) {
 		ResultModel<DictModel> result = new ResultModel<DictModel>();
-		boolean b = dictRemote.edit(new EditModel<DictModel>(model, null));
+		boolean b = dictRemote.edit(model);
 		if (b) {
 			return result.success();
 		}
@@ -67,7 +67,7 @@ public class DictController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResultModel<DictModel> get(@PathVariable("id") Long id) {
 		ResultModel<DictModel> result = new ResultModel<DictModel>();
-		DictModel model = dictRemote.get(new GetModel<Long>(id, null));
+		DictModel model = dictRemote.get(id);
 		if (model != null) {
 			return result.success(model);
 		}
@@ -82,7 +82,7 @@ public class DictController {
 			conditions.add(new RequestCondition("label", model.getLabel()));
 		}
 
-		List<DictModel> models = dictRemote.list(new FindModel(conditions, null));
+		List<DictModel> models = dictRemote.list(conditions);
 		if (models != null && models.size() > 0) {
 			return result.success(models);
 		}
@@ -97,7 +97,7 @@ public class DictController {
 		if (model.getLabel() != null) {
 			conditions.add(new RequestCondition("label", model.getLabel()));
 		}
-		PaggingModel<DictModel> pageModel = dictRemote.page(size, page, new FindModel(conditions, null));
+		PaggingModel<DictModel> pageModel = dictRemote.page(size, page, conditions);
 		if (pageModel != null) {
 			return result.success(pageModel);
 		}

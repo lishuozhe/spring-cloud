@@ -9,14 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.com.lisz.common.model.base.DictModel;
-import cn.com.lisz.common.model.web.DelModel;
-import cn.com.lisz.common.model.web.EditModel;
-import cn.com.lisz.common.model.web.FindModel;
-import cn.com.lisz.common.model.web.GetModel;
 import cn.com.lisz.common.model.web.PaggingModel;
+import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.consumer.admin.remote.hystrix.DictRemoteHystrix;
 
-@FeignClient(name = "spring-cloud-producer-base",path = "/dict", fallback = DictRemoteHystrix.class)
+@FeignClient(name = "spring-cloud-producer-base", path = "/dict", fallback = DictRemoteHystrix.class)
 public interface DictRemote {
 
 	/**
@@ -37,7 +34,7 @@ public interface DictRemote {
 	 * @return
 	 */
 	@RequestMapping(value = "/del", method = RequestMethod.POST)
-	public boolean del(@RequestBody DelModel<Long> model);
+	public boolean del(@RequestBody List<RequestCondition> conditions);
 
 	/**
 	 * 更新
@@ -48,7 +45,7 @@ public interface DictRemote {
 	 * @return
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public boolean edit(@RequestBody EditModel<DictModel> model);
+	public boolean edit(@RequestBody DictModel model);
 
 	/**
 	 * 查看
@@ -58,8 +55,8 @@ public interface DictRemote {
 	 *            传递处理用户创建的数据
 	 * @return
 	 */
-	@RequestMapping(value = "/get", method = RequestMethod.POST)
-	public DictModel get(@RequestBody GetModel<Long> model);
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	public DictModel get(@RequestParam(value = "id") Long id);
 
 	/**
 	 * 条件查看
@@ -70,7 +67,7 @@ public interface DictRemote {
 	 * @return
 	 */
 	@RequestMapping(value = "/findOne", method = RequestMethod.POST)
-	public DictModel findOne(@RequestBody FindModel model);
+	public DictModel findOne(@RequestBody List<RequestCondition> conditions);
 
 	/**
 	 * 判断存在
@@ -81,7 +78,7 @@ public interface DictRemote {
 	 * @return
 	 */
 	@RequestMapping(value = "/exist", method = RequestMethod.POST)
-	public boolean exist(@RequestBody FindModel model);
+	public boolean exist(@RequestBody List<RequestCondition> conditions);
 
 	/**
 	 * 条件查询
@@ -92,7 +89,7 @@ public interface DictRemote {
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public List<DictModel> list(@RequestBody FindModel model);
+	public List<DictModel> list(@RequestBody List<RequestCondition> conditions);
 
 	/**
 	 * 分页查询
@@ -104,5 +101,6 @@ public interface DictRemote {
 	 */
 	@RequestMapping(value = "/page", method = RequestMethod.POST)
 	public PaggingModel<DictModel> page(@RequestParam(value = "pageSize", defaultValue = "5") Integer size,
-			@RequestParam(value = "pageNum", defaultValue = "1") Integer page, @RequestBody FindModel model);
+			@RequestParam(value = "pageNum", defaultValue = "1") Integer page,
+			@RequestBody List<RequestCondition> conditions);
 }

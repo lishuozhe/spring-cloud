@@ -123,7 +123,8 @@ public class QueryUtils {
 		// Query
 		List<QueryConditionItem> queryItems = conditions.stream().map(a -> {
 			String[] pairs;
-			String type = a.getType(), conditionValue = a.getValue();
+			String type = a.getType();
+			Object conditionValue = a.getValue();
 			Field entityField = null;
 			QueryRelationship relationship = null;
 
@@ -188,7 +189,8 @@ public class QueryUtils {
 		// In Query
 		List<QueryConditionItem> inQueryItems = conditions == null ? new ArrayList<>() : conditions.stream().map(a -> {
 			String[] pairs;
-			String type = a.getType(), conditionValue = a.getValue();
+			String type = a.getType();
+			Object conditionValue = a.getValue();
 			Field entityField;
 
 			if (type.toLowerCase().startsWith(IN_KEY + INTERVAL) && 1 < (pairs = type.split(INTERVAL)).length
