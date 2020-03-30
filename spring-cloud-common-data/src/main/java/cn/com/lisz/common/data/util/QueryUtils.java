@@ -5,14 +5,10 @@ import cn.com.lisz.common.data.dao.model.QueryConditionItem;
 import cn.com.lisz.common.data.dao.model.QueryConditionType;
 import cn.com.lisz.common.data.dao.model.QueryRelationship;
 import cn.com.lisz.common.data.entity.BaseEntity;
-import cn.com.lisz.common.model.oauth.UserModel;
 import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.common.util.CollectionUtils;
 import cn.com.lisz.common.util.StringUtils;
 import cn.com.lisz.common.util.TypeUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -38,8 +34,6 @@ import static java.util.stream.Collectors.toList;
  *
  */
 public class QueryUtils {
-
-	private static Logger logger = LoggerFactory.getLogger(QueryUtils.class);
 
 	public static final String DOT = ".";
 	public static final String INTERVAL = "_";
@@ -122,7 +116,7 @@ public class QueryUtils {
 	}
 
 	public static <TEntity extends BaseEntity> QueryCondition getAndCondition(Class<?> entityType,
-			List<RequestCondition> reqConditions, Optional<UserModel> optionalUser) {
+			List<RequestCondition> reqConditions) {
 		List<RequestCondition> conditions = reqConditions == null ? new ArrayList<>()
 				: reqConditions.stream().filter(a -> a != null && !StringUtils.isEmpty(a.getType())).collect(toList());
 
@@ -205,15 +199,10 @@ public class QueryUtils {
 			return null;
 		}).filter(Objects::nonNull).collect(toList());
 
-		// User Permission
-		List<QueryConditionItem> permissionItems = getPermissionCondition(entityType, optionalUser);
-
 		queryItems.addAll(inQueryItems);
-		queryItems.addAll(permissionItems);
 		return new QueryCondition(QueryConditionType.And, queryItems);
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	public static <TEntity extends BaseEntity> Predicate wrapQueryItem(Root<TEntity> root, CriteriaBuilder cb,
 			QueryConditionItem queryItem) {
 		Object value = queryItem.getValue();
@@ -314,7 +303,6 @@ public class QueryUtils {
 		return value;
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	public static <TEntity1 extends BaseEntity, TEntity2 extends BaseEntity> Predicate wrapQueryItem(Path<?> joinRoot,
 			CriteriaBuilder criteriaBuilder, QueryConditionItem queryItem) {
 		Object value = queryItem.getValue();
@@ -513,39 +501,4 @@ public class QueryUtils {
 		return result.get();
 	}
 
-	/**
-	 * 查询条件中附加数据权限
-	 *
-	 * @param entityType
-	 *            Entity类型
-	 * @param optionalUser
-	 *            用户信息
-	 * @return 查询条件列表
-	 */
-	private static List<QueryConditionItem> getPermissionCondition(Class<?> entityType,
-			Optional<UserModel> optionalUser) {
-		List<QueryConditionItem> conditions = new ArrayList<>();
-		List<String> filterFields = Arrays.asList(EntityUtils.FIELD_CREATEBY);
-
-		optionalUser.ifPresent(user -> {
-			Arrays.stream(entityType.getDeclaredFields()).filter(a -> filterFields.contains(a.getName()))
-					.forEach(field -> {
-						switch (field.getName()) {
-						case EntityUtils.FIELD_CREATEBY:
-							conditions.add(new QueryConditionItem(QueryRelationship.Equals, EntityUtils.FIELD_CREATEBY,
-									user.getId()));
-							break;
-						default:
-							break;
-						}
-					});
-
-			conditions.add(new QueryConditionItem(QueryRelationship.Equals, EntityUtils.FIELD_PLATFORMID,
-					user.getPlatformId()));
-		});
-
-		logger.debug(String.format("查询条件权限过滤列表, Condition:%s", EntityUtils.getEntryInfo(conditions)));
-
-		return conditions;
-	}
 }

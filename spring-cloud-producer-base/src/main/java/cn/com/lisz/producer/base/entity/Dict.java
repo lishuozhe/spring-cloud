@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import cn.com.lisz.common.data.entity.BaseEntity;
@@ -18,13 +19,17 @@ public class Dict extends BaseEntity {
 
 	private Long pid;
 
+	@Column(nullable = false, length = 10)
 	private String value;
 
+	@Column(nullable = false, length = 20)
 	private String label;
 
-	private String type;
+	@Column(length = 10)
+	private String code;
 
-	private String description;
+	@Column(length = 20)
+	private String codeName;
 
 	private Integer sort;
 

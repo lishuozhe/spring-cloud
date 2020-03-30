@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.com.lisz.common.data.entity.BaseEntity;
 import cn.com.lisz.common.model.BaseModel;
-import cn.com.lisz.common.model.web.DelModel;
-import cn.com.lisz.common.model.web.EditModel;
-import cn.com.lisz.common.model.web.FindModel;
-import cn.com.lisz.common.model.web.GetModel;
 import cn.com.lisz.common.model.web.PaggingModel;
+import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.common.service.IBaseService;
 import cn.com.lisz.common.util.CollectionUtils;
 
@@ -45,8 +42,8 @@ public class BaseController<TEntity extends BaseEntity, ID extends Serializable,
 	 * @return
 	 */
 	@RequestMapping(value = "/del", method = RequestMethod.POST)
-	public boolean del(@RequestBody DelModel<ID> model) {
-		return service.delete(model.getIds(), model.getUserModel());
+	public boolean del(@RequestBody List<RequestCondition> conditions) {
+		return service.delete(conditions);
 	}
 
 	/**
@@ -58,8 +55,8 @@ public class BaseController<TEntity extends BaseEntity, ID extends Serializable,
 	 * @return
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public boolean edit(@RequestBody EditModel<TModel> model) {
-		return service.edit(model.getModel(), model.getUserModel());
+	public boolean edit(@RequestBody TModel model) {
+		return service.edit(model);
 	}
 
 	/**
@@ -70,9 +67,9 @@ public class BaseController<TEntity extends BaseEntity, ID extends Serializable,
 	 *            传递处理用户创建的数据
 	 * @return
 	 */
-	@RequestMapping(value = "/get", method = RequestMethod.POST)
-	public TModel get(@RequestBody GetModel<ID> model) {
-		return service.get(model.getId(), model.getUserModel());
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	public TModel get(@RequestParam ID id) {
+		return service.get(id);
 	}
 
 	/**
@@ -84,9 +81,9 @@ public class BaseController<TEntity extends BaseEntity, ID extends Serializable,
 	 * @return
 	 */
 	@RequestMapping(value = "/findOne", method = RequestMethod.POST)
-	public TModel findOne(@RequestBody FindModel model) {
-		if (!CollectionUtils.isEmpty(model.getConditions())) {
-			Optional<TModel> viewModel = service.get(model.getConditions(), model.getUserModel());
+	public TModel findOne(@RequestBody List<RequestCondition> conditions) {
+		if (!CollectionUtils.isEmpty(conditions)) {
+			Optional<TModel> viewModel = service.get(conditions);
 			return viewModel.orElse(null);
 		}
 		return null;
@@ -101,9 +98,9 @@ public class BaseController<TEntity extends BaseEntity, ID extends Serializable,
 	 * @return
 	 */
 	@RequestMapping(value = "/exist", method = RequestMethod.POST)
-	public boolean exist(@RequestBody FindModel model) {
-		if (!CollectionUtils.isEmpty(model.getConditions())) {
-			return service.exist(model.getConditions(), model.getUserModel());
+	public boolean exist(@RequestBody List<RequestCondition> conditions) {
+		if (!CollectionUtils.isEmpty(conditions)) {
+			return service.exist(conditions);
 		}
 		return false;
 	}
@@ -117,9 +114,9 @@ public class BaseController<TEntity extends BaseEntity, ID extends Serializable,
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public List<TModel> list(@RequestBody FindModel model) {
-		if (!CollectionUtils.isEmpty(model.getConditions())) {
-			return service.list(model.getConditions(), model.getUserModel());
+	public List<TModel> list(@RequestBody List<RequestCondition> conditions) {
+		if (!CollectionUtils.isEmpty(conditions)) {
+			return service.list(conditions);
 		}
 		return null;
 	}
@@ -134,9 +131,10 @@ public class BaseController<TEntity extends BaseEntity, ID extends Serializable,
 	 */
 	@RequestMapping(value = "/page", method = RequestMethod.POST)
 	public PaggingModel<TModel> page(@RequestParam(value = "pageSize", defaultValue = "5") Integer size,
-			@RequestParam(value = "pageNum", defaultValue = "1") Integer page, @RequestBody FindModel model) {
-		if (!CollectionUtils.isEmpty(model.getConditions())) {
-			return service.pagging(model.getConditions(), page, size, model.getUserModel());
+			@RequestParam(value = "pageNum", defaultValue = "1") Integer page,
+			@RequestBody List<RequestCondition> conditions) {
+		if (!CollectionUtils.isEmpty(conditions)) {
+			return service.pagging(conditions, page, size);
 		}
 		return null;
 	}

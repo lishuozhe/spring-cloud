@@ -19,9 +19,9 @@ public class DictModel extends BaseModel {
 
 	private String label;
 
-	private String type;
+	private String code;
 
-	private String description;
+	private String codeName;
 
 	private Integer sort;
 

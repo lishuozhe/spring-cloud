@@ -7,7 +7,6 @@ import java.util.Optional;
 import cn.com.lisz.common.data.dao.IBaseDao;
 import cn.com.lisz.common.data.entity.BaseEntity;
 import cn.com.lisz.common.model.BaseModel;
-import cn.com.lisz.common.model.oauth.UserModel;
 import cn.com.lisz.common.model.web.PaggingModel;
 import cn.com.lisz.common.model.web.RequestCondition;
 
@@ -39,7 +38,7 @@ public interface IBaseService<TEntity extends BaseEntity, ID extends Serializabl
 	 * @param UserModel
 	 *            登录用户
 	 */
-	boolean delete(List<ID> ids, UserModel userModel);
+	boolean delete(List<RequestCondition> conditions);
 
 	/**
 	 * 编辑数据
@@ -50,7 +49,7 @@ public interface IBaseService<TEntity extends BaseEntity, ID extends Serializabl
 	 *            登录用户
 	 * @return
 	 */
-	boolean edit(TModel model, UserModel userModel);
+	boolean edit(TModel model);
 
 	/**
 	 * 查看数据
@@ -61,7 +60,7 @@ public interface IBaseService<TEntity extends BaseEntity, ID extends Serializabl
 	 *            登录用户
 	 * @return
 	 */
-	TModel get(ID id, UserModel userModel);
+	TModel get(ID id);
 
 	/**
 	 * 条件查询数据
@@ -72,7 +71,7 @@ public interface IBaseService<TEntity extends BaseEntity, ID extends Serializabl
 	 *            登录用户
 	 * @return
 	 */
-	Optional<TModel> get(List<RequestCondition> conditions, UserModel userModel);
+	Optional<TModel> get(List<RequestCondition> conditions);
 
 	/**
 	 * 数据是否存在
@@ -83,7 +82,7 @@ public interface IBaseService<TEntity extends BaseEntity, ID extends Serializabl
 	 *            登录用户
 	 * @return
 	 */
-	boolean exist(List<RequestCondition> conditions, UserModel userModel);
+	boolean exist(List<RequestCondition> conditions);
 
 	/**
 	 * 查询集合
@@ -94,7 +93,7 @@ public interface IBaseService<TEntity extends BaseEntity, ID extends Serializabl
 	 *            登录用户
 	 * @return
 	 */
-	List<TModel> list(List<RequestCondition> conditions, UserModel userModel);
+	List<TModel> list(List<RequestCondition> conditions);
 
 	/**
 	 * 数据分页取得
@@ -109,6 +108,6 @@ public interface IBaseService<TEntity extends BaseEntity, ID extends Serializabl
 	 *            登录用户
 	 * @return
 	 */
-	PaggingModel<TModel> pagging(List<RequestCondition> conditions, int page, int size, UserModel userModel);
+	PaggingModel<TModel> pagging(List<RequestCondition> conditions, int page, int size);
 
 }

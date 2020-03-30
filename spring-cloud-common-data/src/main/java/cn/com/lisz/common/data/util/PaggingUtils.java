@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import cn.com.lisz.common.data.dao.IBaseDao;
 import cn.com.lisz.common.data.entity.BaseEntity;
 import cn.com.lisz.common.model.BaseModel;
-import cn.com.lisz.common.model.oauth.UserModel;
 import cn.com.lisz.common.model.web.PaggingModel;
 import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.common.util.CollectionUtils;
@@ -18,7 +17,6 @@ import cn.com.lisz.common.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
@@ -118,15 +116,10 @@ public class PaggingUtils {
 	 * @param <TModel>
 	 * @return
 	 */
-	public static <TEntity extends BaseEntity, TModel extends BaseModel> PaggingModel<TModel> getPagging(
-			IBaseDao<TEntity, ?> dao, Function<TEntity, TModel> mapper, Class<TEntity> entityType,
-			List<RequestCondition> conditions, int page, int size, boolean isAsc) {
-		return getPagging(dao, mapper, entityType, conditions, Optional.empty(), page, size, isAsc);
-	}
 
 	public static <TEntity extends BaseEntity, TModel extends BaseModel> PaggingModel<TModel> getPagging(
 			IBaseDao<TEntity, ?> dao, Function<TEntity, TModel> mapper, Class<TEntity> entityType,
-			List<RequestCondition> conditions, Optional<UserModel> optionalUser, int page, int size, boolean isAsc) {
+			List<RequestCondition> conditions, int page, int size, boolean isAsc) {
 		if (dao == null || mapper == null || entityType == null) {
 			return new PaggingModel<TModel>();
 		}
@@ -164,7 +157,7 @@ public class PaggingUtils {
 			sort = Sort.by(isAsc ? Sort.Direction.ASC : Sort.Direction.DESC, orderBy);
 		}
 
-		Specification<TEntity> specification = dao.getSpecification(entityType, conditions, true, optionalUser);
+		Specification<TEntity> specification = dao.getSpecification(entityType, conditions, true);
 
 		Pageable pageRequest = PageRequest.of(page, size, sort);
 		Page<TModel> pageInfo = dao.findAll(specification, pageRequest).map(mapper);

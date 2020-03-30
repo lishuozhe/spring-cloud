@@ -2,6 +2,7 @@ package cn.com.lisz.common.data.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,8 +42,10 @@ public class BaseEntity {
 
 	protected Date updateTime;
 
+	@Column(length = 200)
 	protected String remarks;
 
+	@Column(nullable = false, length = 1, columnDefinition = "char default 0")
 	protected String delFlag;
 
 }

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,6 @@ import cn.com.lisz.common.data.entity.BaseEntity;
 import cn.com.lisz.common.data.util.EntityUtils;
 import cn.com.lisz.common.data.util.PaggingUtils;
 import cn.com.lisz.common.model.BaseModel;
-import cn.com.lisz.common.model.oauth.UserModel;
 import cn.com.lisz.common.model.web.PaggingModel;
 import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.common.service.IBaseService;
@@ -32,7 +30,6 @@ public class BaseServiceImpl<TEntity extends BaseEntity, ID extends Serializable
 		implements IBaseService<TEntity, ID, TModel, TDao> {
 
 	private static final int INDEX_ENTITY = 0;
-	// private static final int INDEX_MODEL = 1;
 	private static final int INDEX_VIEWMODEL = 2;
 	private static final int PARAM_COUNT_GENERIC = 4;
 
@@ -113,28 +110,18 @@ public class BaseServiceImpl<TEntity extends BaseEntity, ID extends Serializable
 	}
 
 	@Override
-	public boolean delete(List<ID> ids, UserModel userModel) {
-		List<ID> availableIds;
-		if (!CollectionUtils.isEmpty(ids) && !CollectionUtils.isEmpty(
-				availableIds = ids.stream().filter(a -> !StringUtils.isEmpty(a)).collect(Collectors.toList()))) {
+	public boolean delete(List<RequestCondition> conditions) {
+		if (!CollectionUtils.isEmpty(conditions)) {
 			try {
-				Iterable<TEntity> entities = this.dao.findAllById(availableIds);
+				Iterable<TEntity> entities = dao.getEntityList(getEntityType(), conditions);
 				entities.forEach(a -> {
-					if (userModel != null && userModel.getId() != null) {
-						if (a.getCreateBy().equals(userModel.getId())) {
-							a.setDelFlag("1");
-							a.setUpdateBy(userModel.getId());
-							a.setUpdateTime(new Date());
-						}
-					} else {
-						a.setDelFlag("1");
-						a.setUpdateTime(new Date());
-					}
-
+					a.setDelFlag("1");
+					a.setUpdateBy(a.getCreateBy());
+					a.setUpdateTime(new Date());
 				});
 				return this.dao.saveAll(entities) != null;
 			} catch (Exception e) {
-				logger.error(String.format("数据删除失败, ids:%s", ids), e);
+				logger.error(String.format("数据删除失败, ids:%s", conditions), e);
 			}
 		}
 
@@ -144,7 +131,7 @@ public class BaseServiceImpl<TEntity extends BaseEntity, ID extends Serializable
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean edit(TModel model, UserModel userModel) {
+	public boolean edit(TModel model) {
 		Objects.requireNonNull(model, "model could't be null");
 
 		AtomicReference<TEntity> reference = new AtomicReference<>();
@@ -153,16 +140,16 @@ public class BaseServiceImpl<TEntity extends BaseEntity, ID extends Serializable
 		if (!StringUtils.isEmpty(id)) {
 			try {
 				dao.findById(id).ifPresent(entity -> {
-					if (userModel != null && userModel.getId() != null) {
-						if (entity.getCreateBy().equals(userModel.getId())) {
+					// 管理员修改（允许）
+					if (model.getUpdateBy() == null) {
+						EntityUtils.clone(model, entity);
+						reference.set(dao.save(entity));
+					} else {
+						if (entity.getCreateBy().equals(model.getUpdateBy())) {
 							EntityUtils.clone(model, entity);
 							reference.set(dao.save(entity));
 						}
-					} else {
-						EntityUtils.clone(model, entity);
-						reference.set(dao.save(entity));
 					}
-
 				});
 			} catch (Exception e) {
 				logger.error(String.format("编辑处理异常, model:%s", EntityUtils.getEntryInfo(model)), e);
@@ -173,38 +160,28 @@ public class BaseServiceImpl<TEntity extends BaseEntity, ID extends Serializable
 	}
 
 	@Override
-	public TModel get(ID id, UserModel userModel) {
-		TModel model = dao.get(getModelType(), id);
-		if (userModel != null && userModel.getId() != null) {
-			if (model.getCreateBy().equals(userModel.getId())) {
-				return model;
-			}
-		} else {
-			return model;
-		}
-		return null;
+	public TModel get(ID id) {
+		return dao.get(getModelType(), id);
 	}
 
 	@Override
-	public Optional<TModel> get(List<RequestCondition> conditions, UserModel userModel) {
-		return dao.get(getEntityType(), conditions, a -> EntityUtils.mapping(getModelType(), a),
-				userModel != null ? Optional.of(userModel) : Optional.empty());
+	public Optional<TModel> get(List<RequestCondition> conditions) {
+		return dao.get(getEntityType(), conditions, a -> EntityUtils.mapping(getModelType(), a));
 	}
 
 	@Override
-	public boolean exist(List<RequestCondition> conditions, UserModel userModel) {
+	public boolean exist(List<RequestCondition> conditions) {
 		if (CollectionUtils.isEmpty(conditions)) {
 			return false;
 		}
-		return dao.exist(getEntityType(), conditions, userModel != null ? Optional.of(userModel) : Optional.empty());
+		return dao.exist(getEntityType(), conditions);
 	}
 
 	@Override
-	public List<TModel> list(List<RequestCondition> conditions, UserModel userModel) {
+	public List<TModel> list(List<RequestCondition> conditions) {
 		try {
 
-			return dao.getList(getEntityType(), conditions, a -> EntityUtils.mapping(getModelType(), a),
-					userModel != null ? Optional.of(userModel) : Optional.empty());
+			return dao.getList(getEntityType(), conditions, a -> EntityUtils.mapping(getModelType(), a));
 
 		} catch (Exception e) {
 			logger.error(String.format("数据列表取得失败, conditions:%s", conditions), e);
@@ -214,11 +191,11 @@ public class BaseServiceImpl<TEntity extends BaseEntity, ID extends Serializable
 	}
 
 	@Override
-	public PaggingModel<TModel> pagging(List<RequestCondition> conditions, int page, int size, UserModel userModel) {
-		logger.info(String.format("Pagging, conditions:%s, page:%s, size:%s, user:%s",
-				EntityUtils.getEntryInfo(conditions), page, size, EntityUtils.getEntryInfo(userModel)));
+	public PaggingModel<TModel> pagging(List<RequestCondition> conditions, int page, int size) {
+		logger.info(String.format("Pagging, conditions:%s, page:%s, size:%s", EntityUtils.getEntryInfo(conditions),
+				page, size));
 		return PaggingUtils.getPagging(dao, a -> EntityUtils.mapping(getModelType(), a), getEntityType(), conditions,
-				userModel != null ? Optional.of(userModel) : Optional.empty(), page, size, false);
+				page, size, false);
 	}
 
 }

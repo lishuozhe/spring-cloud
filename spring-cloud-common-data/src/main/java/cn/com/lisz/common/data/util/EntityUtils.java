@@ -57,7 +57,7 @@ public class EntityUtils {
 
 	public static final String FIELD_DELETE = "delFlag";
 
-	public static final String FIELD_ORDERTICKS = "orderTicks";
+	public static final String FIELD_ORDERTICKS = "sort";
 
 	private static final int MAX_MAPPING_LEVEL = 2;
 

@@ -22,7 +22,6 @@ import cn.com.lisz.common.data.util.QueryUtils;
 import cn.com.lisz.common.model.BaseModel;
 import cn.com.lisz.common.model.KeyValuePair;
 import cn.com.lisz.common.model.TripleFun;
-import cn.com.lisz.common.model.oauth.UserModel;
 import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.common.util.CollectionUtils;
 import cn.com.lisz.common.util.StringUtils;
@@ -51,7 +50,7 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 
 	default Predicate getPredicate(Class<?> entityType, List<RequestCondition> requestCondition, Path<?> join,
 			CriteriaBuilder criteriaBuilder) {
-		QueryCondition queryConditions = QueryUtils.getAndCondition(entityType, requestCondition, Optional.empty());
+		QueryCondition queryConditions = QueryUtils.getAndCondition(entityType, requestCondition);
 
 		if (!CollectionUtils.isEmpty(queryConditions)) {
 			AtomicReference<Predicate> whereRef = new AtomicReference<>();
@@ -90,19 +89,6 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 	 *            实体类类型
 	 * @param requestCondition
 	 *            查询条件
-	 * @return JPA检索对象
-	 */
-	default Specification<TEntity> getSpecification(Class<TEntity> entityType, List<RequestCondition> requestCondition) {
-		return getSpecification(entityType, requestCondition, Optional.empty());
-	}
-
-	/**
-	 * JPA检索对象取得
-	 *
-	 * @param entityType
-	 *            实体类类型
-	 * @param requestCondition
-	 *            查询条件
 	 * @param optionalUser
 	 *            登录用户信息
 	 * @param <TEntity>
@@ -110,8 +96,8 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 	 */
 	@SuppressWarnings("hiding")
 	default <TEntity extends BaseEntity> Specification<TEntity> getSpecification(Class<TEntity> entityType,
-			List<RequestCondition> requestCondition, boolean isDistinct, Optional<UserModel> optionalUser) {
-		QueryCondition queryConditions = QueryUtils.getAndCondition(entityType, requestCondition, optionalUser);
+			List<RequestCondition> requestCondition, boolean isDistinct) {
+		QueryCondition queryConditions = QueryUtils.getAndCondition(entityType, requestCondition);
 		if (!CollectionUtils.isEmpty(queryConditions)) {
 			return (Specification<TEntity>) (root, query, criteriaBuilder) -> {
 				AtomicReference<Expression<Boolean>> whereRef = new AtomicReference<>();
@@ -164,9 +150,9 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 	 */
 	@SuppressWarnings("hiding")
 	default <TEntity extends BaseEntity> Specification<TEntity> getSpecification(Class<TEntity> entityType,
-			List<RequestCondition> requestCondition, Optional<UserModel> optionalUser,
+			List<RequestCondition> requestCondition,
 			TripleFun<Root<TEntity>, CriteriaQuery<?>, CriteriaBuilder, Predicate> extFilter) {
-		QueryCondition queryConditions = QueryUtils.getAndCondition(entityType, requestCondition, optionalUser);
+		QueryCondition queryConditions = QueryUtils.getAndCondition(entityType, requestCondition);
 
 		if (!CollectionUtils.isEmpty(queryConditions)) {
 			return (Specification<TEntity>) (root, query, criteriaBuilder) -> {
@@ -234,8 +220,7 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 	 *            查询条件
 	 * @return JPA检索对象
 	 */
-	default Specification<TEntity> getSpecification(Class<TEntity> entityType, List<RequestCondition> conditions,
-			Optional<UserModel> optionalUser) {
+	default Specification<TEntity> getSpecification(Class<TEntity> entityType, List<RequestCondition> conditions) {
 		Objects.requireNonNull(entityType);
 
 		if (CollectionUtils.isEmpty(conditions)) {
@@ -260,7 +245,7 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 					&& relationConditions.stream().noneMatch(i -> type.startsWith(i.getKey() + QueryUtils.DOT));
 		}).collect(toList());
 
-		return getSpecification(entityType, selfConditions, optionalUser, (root, query, criteriaBuilder) -> {
+		return getSpecification(entityType, selfConditions, (root, query, criteriaBuilder) -> {
 			List<Predicate> relationWhere = relationConditions.stream().map(a -> {
 				Path<?> carownerJoin = root.join(a.getKey(), JoinType.LEFT);
 				AtomicReference<Predicate> reference = new AtomicReference<>();
@@ -277,26 +262,24 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 		});
 	}
 
-
 	default boolean exist(Class<TEntity> entityType, String id) {
 		return 0 < count(entityType, id);
 	}
 
-	default boolean exist(Class<TEntity> entityType, List<RequestCondition> conditions, Optional<UserModel> user) {
-		return 0 < count(entityType, conditions, user);
+	default boolean exist(Class<TEntity> entityType, List<RequestCondition> conditions) {
+		return 0 < count(entityType, conditions);
 	}
 
 	default long count(Class<TEntity> entityType, String id) {
-		return count(entityType, Collections.singletonList(new RequestCondition(EntityUtils.FIELD_ID, id)),
-				Optional.empty());
+		return count(entityType, Collections.singletonList(new RequestCondition(EntityUtils.FIELD_ID, id)));
 	}
 
-	default long count(Class<TEntity> entityType, List<RequestCondition> conditions, Optional<UserModel> user) {
-		return count(getSpecification(entityType, conditions, true, user));
+	default long count(Class<TEntity> entityType, List<RequestCondition> conditions) {
+		return count(getSpecification(entityType, conditions, true));
 	}
 
-	default boolean remove(Class<TEntity> entityType, List<RequestCondition> conditions, Optional<UserModel> user) {
-		List<TEntity> entities = findAll(getSpecification(entityType, conditions, true, user));
+	default boolean remove(Class<TEntity> entityType, List<RequestCondition> conditions) {
+		List<TEntity> entities = findAll(getSpecification(entityType, conditions, true));
 
 		if (!CollectionUtils.isEmpty(entities)) {
 			deleteAll(entities);
@@ -306,11 +289,10 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 		return false;
 	}
 
-	default Optional<TEntity> getEntity(Class<TEntity> entityType, List<RequestCondition> conditions,
-			Optional<UserModel> user) {
+	default Optional<TEntity> getEntity(Class<TEntity> entityType, List<RequestCondition> conditions) {
 		Objects.requireNonNull(entityType, "实体类类型不能为NULL");
 
-		return findOne(getSpecification(entityType, conditions, user));
+		return findOne(getSpecification(entityType, conditions));
 	}
 
 	default <TModel extends BaseModel> TModel get(Class<TModel> modelType, ID id) {
@@ -337,11 +319,11 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 	}
 
 	default <TModel extends BaseModel> Optional<TModel> get(Class<TEntity> entityType,
-			List<RequestCondition> conditions, Function<TEntity, TModel> mapper, Optional<UserModel> user) {
+			List<RequestCondition> conditions, Function<TEntity, TModel> mapper) {
 		Objects.requireNonNull(entityType, "实体类型不能为NULL");
 		Objects.requireNonNull(mapper, "类型转换处理不能为NULL");
 
-		return findOne(getSpecification(entityType, conditions, true, user)).map(mapper);
+		return findOne(getSpecification(entityType, conditions, true)).map(mapper);
 	}
 
 	/**
@@ -355,11 +337,10 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 	 *            权限过滤用用户信息
 	 * @return
 	 */
-	default List<TEntity> getEntityList(Class<TEntity> entityType, List<RequestCondition> conditions,
-			Optional<UserModel> user) {
+	default List<TEntity> getEntityList(Class<TEntity> entityType, List<RequestCondition> conditions) {
 		Objects.requireNonNull(entityType, "实体类型不能为NULL");
 
-		return findAll(getSpecification(entityType, conditions, user));
+		return findAll(getSpecification(entityType, conditions));
 	}
 
 	/**
@@ -377,11 +358,11 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 	 * @return
 	 */
 	default <TModel extends BaseModel> List<TModel> getList(Class<TEntity> entityType,
-			List<RequestCondition> conditions, Function<TEntity, TModel> mapper, Optional<UserModel> user) {
+			List<RequestCondition> conditions, Function<TEntity, TModel> mapper) {
 		Objects.requireNonNull(entityType, "实体类型不能为NULL");
 		Objects.requireNonNull(mapper, "类型转换处理不能为NULL");
-		
-		return findAll(getSpecification(entityType, conditions, user)).stream().map(mapper).collect(toList());
+
+		return findAll(getSpecification(entityType, conditions)).stream().map(mapper).collect(toList());
 	}
 
 	default <TModel extends BaseModel> List<TModel> getList(Class<TModel> modelType, Specification<TEntity> spec) {
