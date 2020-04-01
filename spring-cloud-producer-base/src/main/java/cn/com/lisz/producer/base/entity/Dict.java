@@ -19,13 +19,13 @@ public class Dict extends BaseEntity {
 
 	private Long pid;
 
-	@Column(nullable = false, length = 10)
+	@Column(nullable = false, length = 20)
 	private String value;
 
 	@Column(nullable = false, length = 20)
 	private String label;
 
-	@Column(length = 10)
+	@Column(length = 20)
 	private String code;
 
 	@Column(length = 20)

@@ -26,8 +26,15 @@ public final class AuthUserFactory {
 
 	private static List<String> getPermission(UserModel model) {
 		List<String> list = new ArrayList<String>();
-		// TODO
+		if (model.getRoles() != null) {
+			model.getRoles().forEach(role -> {
+				if (role.getPermissions() != null) {
+					role.getPermissions().forEach(permission -> {
+						list.add(permission.getCode());
+					});
+				}
+			});
+		}
 		return list;
-
 	}
 }

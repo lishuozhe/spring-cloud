@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class DictController {
 	@Autowired
 	IDictService dictService;
 
+	@PreAuthorize("hasAuthority('admin:dict:add')")
 	@ApiOperation(value = "新增", notes = "新增字典")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResultModel<DictModel> add(
@@ -44,6 +46,7 @@ public class DictController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:dict:del')")
 	@ApiOperation(value = "删除", notes = "删除字典")
 	@RequestMapping(value = "/del", method = RequestMethod.DELETE)
 	public ResultModel<DictModel> del(
@@ -56,6 +59,7 @@ public class DictController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:dict:edit')")
 	@ApiOperation(value = "修改", notes = "修改字典")
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ResultModel<DictModel> edit(
@@ -68,6 +72,7 @@ public class DictController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:dict:get')")
 	@ApiOperation(value = "查看", notes = "查看字典（无权限过滤）")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResultModel<DictModel> get(
@@ -80,6 +85,7 @@ public class DictController {
 		return result.noData();
 	}
 
+	@PreAuthorize("hasAuthority('admin:dict:get')")
 	@ApiOperation(value = "查询", notes = "查询字典")
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public ResultModel<List<DictModel>> list(
@@ -93,6 +99,7 @@ public class DictController {
 		return result.noData();
 	}
 
+	@PreAuthorize("hasAuthority('admin:dict:get')")
 	@ApiOperation(value = "分页查询", notes = "分页查询字典")
 	@RequestMapping(value = "/page", method = RequestMethod.POST)
 	public ResultModel<PaggingModel<DictModel>> page(

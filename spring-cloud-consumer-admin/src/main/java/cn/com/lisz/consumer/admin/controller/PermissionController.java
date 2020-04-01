@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class PermissionController {
 	@Autowired
 	IPermissionService permissionService;
 
+	@PreAuthorize("hasAuthority('admin:permission:add')")
 	@ApiOperation(value = "新增", notes = "新增权限")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResultModel<PermissionModel> add(
@@ -44,6 +46,7 @@ public class PermissionController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:permission:del')")
 	@ApiOperation(value = "删除", notes = "删除权限")
 	@RequestMapping(value = "/del", method = RequestMethod.DELETE)
 	public ResultModel<PermissionModel> del(
@@ -56,6 +59,7 @@ public class PermissionController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:permission:edit')")
 	@ApiOperation(value = "修改", notes = "修改权限")
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ResultModel<PermissionModel> edit(
@@ -68,6 +72,7 @@ public class PermissionController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:permission:get')")
 	@ApiOperation(value = "查看", notes = "查看权限（无权限过滤）")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResultModel<PermissionModel> get(
@@ -80,6 +85,7 @@ public class PermissionController {
 		return result.noData();
 	}
 
+	@PreAuthorize("hasAuthority('admin:permission:get')")
 	@ApiOperation(value = "查询", notes = "查询权限")
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public ResultModel<List<PermissionModel>> list(
@@ -93,6 +99,7 @@ public class PermissionController {
 		return result.noData();
 	}
 
+	@PreAuthorize("hasAuthority('admin:permission:get')")
 	@ApiOperation(value = "分页查询", notes = "分页查询权限")
 	@RequestMapping(value = "/page", method = RequestMethod.POST)
 	public ResultModel<PaggingModel<PermissionModel>> page(

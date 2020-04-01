@@ -140,7 +140,7 @@ public class BaseServiceImpl<TEntity extends BaseEntity, ID extends Serializable
 		if (!StringUtils.isEmpty(id)) {
 			try {
 				dao.findById(id).ifPresent(entity -> {
-					if (model.getUpdateBy() == null) {
+					if (entity.getCreateBy() == null || model.getUpdateBy() == null) {
 						EntityUtils.clone(model, entity);
 						reference.set(dao.save(entity));
 					} else {

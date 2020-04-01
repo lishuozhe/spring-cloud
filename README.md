@@ -23,6 +23,8 @@ spring-cloud
 
 ```
 
+启动producer服务会自动创建数据表 或者执行初始化数据库脚本《spring-cloud-base》
+
 
 
 #### 查询条件使用

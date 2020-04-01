@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class RoleController {
 	@Autowired
 	IRoleService roleService;
 
+	@PreAuthorize("hasAuthority('admin:role:add')")
 	@ApiOperation(value = "新增", notes = "新增角色")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResultModel<RoleModel> add(
@@ -44,6 +46,7 @@ public class RoleController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:role:del')")
 	@ApiOperation(value = "删除", notes = "删除角色")
 	@RequestMapping(value = "/del", method = RequestMethod.DELETE)
 	public ResultModel<RoleModel> del(
@@ -56,6 +59,7 @@ public class RoleController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:role:edit')")
 	@ApiOperation(value = "修改", notes = "修改角色")
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ResultModel<RoleModel> edit(
@@ -68,6 +72,7 @@ public class RoleController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:role:get')")
 	@ApiOperation(value = "查看", notes = "查看角色（无权限过滤）")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResultModel<RoleModel> get(
@@ -80,6 +85,7 @@ public class RoleController {
 		return result.noData();
 	}
 
+	@PreAuthorize("hasAuthority('admin:role:get')")
 	@ApiOperation(value = "查询", notes = "查询角色")
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public ResultModel<List<RoleModel>> list(
@@ -93,6 +99,7 @@ public class RoleController {
 		return result.noData();
 	}
 
+	@PreAuthorize("hasAuthority('admin:role:get')")
 	@ApiOperation(value = "分页查询", notes = "分页查询角色")
 	@RequestMapping(value = "/page", method = RequestMethod.POST)
 	public ResultModel<PaggingModel<RoleModel>> page(

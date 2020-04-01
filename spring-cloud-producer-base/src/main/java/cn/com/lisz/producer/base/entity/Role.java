@@ -10,8 +10,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 
 import cn.com.lisz.common.data.entity.BaseEntity;
 
@@ -28,7 +28,7 @@ public class Role extends BaseEntity {
 	@Column(nullable = false, length = 20)
 	private String name;
 
-	@OneToMany
+	@ManyToMany
 	@JoinTable(name = "sys_role_permission", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
 	private List<Permission> permissions;
 }

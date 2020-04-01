@@ -11,7 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import cn.com.lisz.common.data.entity.BaseEntity;
 
@@ -34,7 +34,7 @@ public class User extends BaseEntity {
 	@Column(length = 64)
 	private String password;
 	
-	@OneToMany
+	@ManyToMany
 	@JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
 }

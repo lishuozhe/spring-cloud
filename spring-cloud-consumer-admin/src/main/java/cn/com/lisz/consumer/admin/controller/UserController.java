@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class UserController {
 	@Autowired
 	IUserService userService;
 
+	@PreAuthorize("hasAuthority('admin:user:add')")
 	@ApiOperation(value = "新增", notes = "新增用户")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResultModel<UserModel> add(
@@ -44,6 +46,7 @@ public class UserController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:user:del')")
 	@ApiOperation(value = "删除", notes = "删除用户")
 	@RequestMapping(value = "/del", method = RequestMethod.DELETE)
 	public ResultModel<UserModel> del(
@@ -56,6 +59,7 @@ public class UserController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:user:edit')")
 	@ApiOperation(value = "修改", notes = "修改用户")
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public ResultModel<UserModel> edit(
@@ -68,6 +72,7 @@ public class UserController {
 		return result.failed();
 	}
 
+	@PreAuthorize("hasAuthority('admin:user:get')")
 	@ApiOperation(value = "查看", notes = "查看用户（无权限过滤）")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResultModel<UserModel> get(
@@ -80,6 +85,7 @@ public class UserController {
 		return result.noData();
 	}
 
+	@PreAuthorize("hasAuthority('admin:user:get')")
 	@ApiOperation(value = "查询", notes = "查询用户")
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public ResultModel<List<UserModel>> list(
@@ -93,6 +99,7 @@ public class UserController {
 		return result.noData();
 	}
 
+	@PreAuthorize("hasAuthority('admin:user:get')")
 	@ApiOperation(value = "分页查询", notes = "分页查询用户")
 	@RequestMapping(value = "/page", method = RequestMethod.POST)
 	public ResultModel<PaggingModel<UserModel>> page(
