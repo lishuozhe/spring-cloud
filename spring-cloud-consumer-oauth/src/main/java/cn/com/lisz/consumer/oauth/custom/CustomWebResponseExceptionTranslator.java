@@ -16,6 +16,12 @@ import org.springframework.security.web.util.ThrowableAnalyzer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 
+/**
+ * 格式化返回异常
+ * 
+ * @author lisz
+ *
+ */
 @Component
 public class CustomWebResponseExceptionTranslator implements WebResponseExceptionTranslator {
 

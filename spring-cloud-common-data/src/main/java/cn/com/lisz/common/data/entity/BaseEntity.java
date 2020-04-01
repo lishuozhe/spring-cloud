@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 通用基类
+ * 实体基类
  * 
  * @author lisz
  *

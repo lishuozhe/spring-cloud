@@ -36,7 +36,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 /**
- * 通用映射类
+ * dao 基类
  * 
  * @author lisz
  *

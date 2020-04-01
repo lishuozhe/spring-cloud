@@ -26,6 +26,16 @@ import cn.com.lisz.common.service.IBaseService;
 import cn.com.lisz.common.util.CollectionUtils;
 import cn.com.lisz.common.util.StringUtils;
 
+/**
+ * service 基类
+ * 
+ * @author lisz
+ *
+ * @param <TEntity>
+ * @param <ID>
+ * @param <TModel>
+ * @param <TDao>
+ */
 public class BaseServiceImpl<TEntity extends BaseEntity, ID extends Serializable, TModel extends BaseModel, TDao extends IBaseDao<TEntity, ID>>
 		implements IBaseService<TEntity, ID, TModel, TDao> {
 

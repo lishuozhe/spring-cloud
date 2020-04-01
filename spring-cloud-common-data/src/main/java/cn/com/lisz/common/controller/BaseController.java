@@ -17,6 +17,16 @@ import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.common.service.IBaseService;
 import cn.com.lisz.common.util.CollectionUtils;
 
+/**
+ * Controller基类
+ * 
+ * @author lisz
+ *
+ * @param <TEntity>
+ * @param <ID>
+ * @param <TModel>
+ * @param <TService>
+ */
 public class BaseController<TEntity extends BaseEntity, ID extends Serializable, TModel extends BaseModel, TService extends IBaseService<TEntity, ID, TModel, ?>> {
 
 	@Autowired

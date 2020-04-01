@@ -7,6 +7,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 模型基类
+ * @author lisz
+ *
+ */
 @Getter
 @Setter
 public class BaseModel {

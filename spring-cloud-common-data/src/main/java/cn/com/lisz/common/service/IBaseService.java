@@ -11,7 +11,7 @@ import cn.com.lisz.common.model.web.PaggingModel;
 import cn.com.lisz.common.model.web.RequestCondition;
 
 /**
- * 通用接口
+ * service 通用接口
  * 
  * @author lisz
  *

@@ -9,6 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 
+/**
+ * 认证切面 格式化返回结果
+ * 
+ * @author lisz
+ *
+ */
 @Component
 @Aspect
 public class AuthTokenAspect {
