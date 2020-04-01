@@ -1,4 +1,4 @@
-package cn.com.lisz.consumer.oauth.config;
+package cn.com.lisz.consumer.oauth.custom;
 
 import java.io.IOException;
 

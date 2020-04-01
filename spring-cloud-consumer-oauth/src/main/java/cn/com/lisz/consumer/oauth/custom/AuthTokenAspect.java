@@ -1,4 +1,4 @@
-package cn.com.lisz.consumer.oauth.config;
+package cn.com.lisz.consumer.oauth.custom;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

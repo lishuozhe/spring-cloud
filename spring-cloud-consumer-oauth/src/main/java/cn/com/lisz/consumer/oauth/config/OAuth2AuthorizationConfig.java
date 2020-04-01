@@ -25,6 +25,9 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import cn.com.lisz.common.oauth.custom.RestfulAccessDeniedHandler;
+import cn.com.lisz.consumer.oauth.custom.CustomWebResponseExceptionTranslator;
+
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
@@ -42,7 +45,9 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 	private int refreshTokenValiditySecond;
 	@Autowired
 	private UserDetailsService userDetailsService;
-
+	@Autowired
+	private CustomWebResponseExceptionTranslator customWebResponseExceptionTranslator;
+	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		// clients.withClientDetails(clientDetailsService);
@@ -64,6 +69,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 		TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
 		tokenEnhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter()));
 		endpoints.tokenEnhancer(tokenEnhancerChain);
+		endpoints.exceptionTranslator(customWebResponseExceptionTranslator);
 		// @formatter:on
 	}
 

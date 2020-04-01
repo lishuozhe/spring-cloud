@@ -18,6 +18,9 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import cn.com.lisz.common.oauth.custom.RestAuthenticationEntryPoint;
+import cn.com.lisz.common.oauth.custom.RestfulAccessDeniedHandler;
+
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)

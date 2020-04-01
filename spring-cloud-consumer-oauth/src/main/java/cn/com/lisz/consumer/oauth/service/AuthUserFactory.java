@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import cn.com.lisz.common.model.base.UserModel;
-import cn.com.lisz.common.oauth.AuthUser;
+import cn.com.lisz.common.oauth.custom.AuthUser;
 
 public final class AuthUserFactory {
 
