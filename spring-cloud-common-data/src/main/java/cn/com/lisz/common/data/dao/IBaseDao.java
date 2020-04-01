@@ -89,8 +89,6 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 	 *            实体类类型
 	 * @param requestCondition
 	 *            查询条件
-	 * @param optionalUser
-	 *            登录用户信息
 	 * @param <TEntity>
 	 * @return
 	 */
@@ -143,8 +141,6 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 	 *            实体类类型
 	 * @param requestCondition
 	 *            查询条件
-	 * @param optionalUser
-	 *            登录用户信息
 	 * @param <TEntity>
 	 * @return
 	 */
@@ -333,8 +329,6 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 	 *            实体类类型
 	 * @param conditions
 	 *            查询条件
-	 * @param user
-	 *            权限过滤用用户信息
 	 * @return
 	 */
 	default List<TEntity> getEntityList(Class<TEntity> entityType, List<RequestCondition> conditions) {
@@ -352,8 +346,6 @@ public interface IBaseDao<TEntity extends BaseEntity, ID extends Serializable>
 	 *            查询条件
 	 * @param mapper
 	 *            映射转换处理
-	 * @param user
-	 *            权限过滤用用户信息
 	 * @param <TModel>
 	 * @return
 	 */

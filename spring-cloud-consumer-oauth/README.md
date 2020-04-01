@@ -6,6 +6,7 @@ spring-cloud微服务架构
 认证中心，负责用户的认证与鉴权
 ```
 - 认证接口: localhost:10000/oauth/token
+或 http://localhost:8888/security/oauth/token?username=admin&password=admin
 
 ```
 接口参数: 

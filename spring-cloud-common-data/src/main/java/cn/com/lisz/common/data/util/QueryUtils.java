@@ -119,7 +119,8 @@ public class QueryUtils {
 			List<RequestCondition> reqConditions) {
 		List<RequestCondition> conditions = reqConditions == null ? new ArrayList<>()
 				: reqConditions.stream().filter(a -> a != null && !StringUtils.isEmpty(a.getType())).collect(toList());
-
+		// 过滤删除条件
+		conditions.add(new RequestCondition(EntityUtils.FIELD_DELETE, "0"));
 		// Query
 		List<QueryConditionItem> queryItems = conditions.stream().map(a -> {
 			String[] pairs;
