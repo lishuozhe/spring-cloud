@@ -31,8 +31,22 @@ zuul:
       serviceId: spring-cloud-consumer-oauth
   #是否开启重试功能
   retryable: true
-#对当前服务的重试次数
+ 
+#hystrix的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+#ribbon的超时时间
 ribbon:
+  ReadTimeout: 30000
+  ConnectTimeout: 30000 
+  #对当前服务的重试次数
   MaxAutoRetries: 2
   #切换相同Server的次数
   MaxAutoRetriesNextServer: 0

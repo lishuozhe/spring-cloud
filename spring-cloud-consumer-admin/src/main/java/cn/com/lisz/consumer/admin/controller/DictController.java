@@ -2,14 +2,12 @@ package cn.com.lisz.consumer.admin.controller;
 
 import cn.com.lisz.common.model.base.DictModel;
 import cn.com.lisz.common.model.web.PaggingModel;
-import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.common.model.web.ResultModel;
-import cn.com.lisz.consumer.admin.remote.DictRemote;
+import cn.com.lisz.consumer.admin.service.IDictService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +30,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class DictController {
 
 	@Autowired
-	DictRemote dictRemote;
+	IDictService dictService;
 
 	@ApiOperation(value = "新增", notes = "新增字典")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResultModel<DictModel> add(
 			@ApiParam(name = "model", value = "字典模型", required = true) @RequestBody DictModel model) {
 		ResultModel<DictModel> result = new ResultModel<DictModel>();
-		Long id = dictRemote.add(model);
+		Long id = dictService.add(model);
 		if (id != null) {
 			return result.success();
 		}
@@ -51,11 +49,7 @@ public class DictController {
 	public ResultModel<DictModel> del(
 			@ApiParam(name = "ids", value = "字典ID集合", required = true) @RequestBody List<Long> ids) {
 		ResultModel<DictModel> result = new ResultModel<DictModel>();
-		List<RequestCondition> conditions = new ArrayList<RequestCondition>();
-		for (Long id : ids) {
-			conditions.add(new RequestCondition("in_id", id));
-		}
-		boolean b = dictRemote.del(conditions);
+		boolean b = dictService.del(ids);
 		if (b) {
 			return result.success();
 		}
@@ -67,7 +61,7 @@ public class DictController {
 	public ResultModel<DictModel> edit(
 			@ApiParam(name = "model", value = "字典模型", required = true) @RequestBody DictModel model) {
 		ResultModel<DictModel> result = new ResultModel<DictModel>();
-		boolean b = dictRemote.edit(model);
+		boolean b = dictService.edit(model);
 		if (b) {
 			return result.success();
 		}
@@ -79,7 +73,7 @@ public class DictController {
 	public ResultModel<DictModel> get(
 			@ApiParam(name = "id", value = "字典ID", required = true) @PathVariable("id") Long id) {
 		ResultModel<DictModel> result = new ResultModel<DictModel>();
-		DictModel model = dictRemote.get(id);
+		DictModel model = dictService.get(id);
 		if (model != null) {
 			return result.success(model);
 		}
@@ -91,12 +85,8 @@ public class DictController {
 	public ResultModel<List<DictModel>> list(
 			@ApiParam(name = "model", value = "字典模型", required = true) @RequestBody DictModel model) {
 		ResultModel<List<DictModel>> result = new ResultModel<List<DictModel>>();
-		List<RequestCondition> conditions = new ArrayList<RequestCondition>();
-		if (model.getLabel() != null) {
-			conditions.add(new RequestCondition("label", model.getLabel()));
-		}
 
-		List<DictModel> models = dictRemote.list(conditions);
+		List<DictModel> models = dictService.list(model);
 		if (models != null && models.size() > 0) {
 			return result.success(models);
 		}
@@ -110,11 +100,8 @@ public class DictController {
 			@ApiParam(name = "page", value = "分页参数，当前页数", required = true) @RequestParam(value = "pageNum", defaultValue = "1") Integer page,
 			@ApiParam(name = "model", value = "字典模型", required = true) @RequestBody DictModel model) {
 		ResultModel<PaggingModel<DictModel>> result = new ResultModel<PaggingModel<DictModel>>();
-		List<RequestCondition> conditions = new ArrayList<RequestCondition>();
-		if (model.getLabel() != null) {
-			conditions.add(new RequestCondition("label", model.getLabel()));
-		}
-		PaggingModel<DictModel> pageModel = dictRemote.page(size, page, conditions);
+
+		PaggingModel<DictModel> pageModel = dictService.page(size, page, model);
 		if (pageModel != null) {
 			return result.success(pageModel);
 		}

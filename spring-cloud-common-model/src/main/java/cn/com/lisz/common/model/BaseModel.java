@@ -18,13 +18,13 @@ public class BaseModel {
 	private Long platformId;
 
 	@ApiModelProperty(value = "创建人",hidden = true)
-	private Long createBy;
+	private String createBy;
 
 	@ApiModelProperty(value = "创建时间",hidden = true)
 	private Date createTime;
 
 	@ApiModelProperty(value = "修改人",hidden = true)
-	private Long updateBy;
+	private String updateBy;
 
 	@ApiModelProperty(value = "修改时间",hidden = true)
 	private Date updateTime;

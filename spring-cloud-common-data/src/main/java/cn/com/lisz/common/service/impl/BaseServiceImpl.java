@@ -140,7 +140,6 @@ public class BaseServiceImpl<TEntity extends BaseEntity, ID extends Serializable
 		if (!StringUtils.isEmpty(id)) {
 			try {
 				dao.findById(id).ifPresent(entity -> {
-					// 管理员修改（允许）
 					if (model.getUpdateBy() == null) {
 						EntityUtils.clone(model, entity);
 						reference.set(dao.save(entity));

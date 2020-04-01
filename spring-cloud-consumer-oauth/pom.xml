@@ -18,6 +18,16 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>cn.com.lisz</groupId>
+			<artifactId>spring-cloud-common-model</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.com.lisz</groupId>
+			<artifactId>spring-cloud-common-oauth</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
@@ -40,6 +50,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-oauth2</artifactId>
 		</dependency>
+		
 	</dependencies>
 
 	<build>

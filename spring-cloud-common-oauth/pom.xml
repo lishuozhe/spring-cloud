@@ -16,15 +16,33 @@
 	</parent>
 
 	<dependencies>
+	
+		<dependency>
+			<groupId>cn.com.lisz</groupId>
+			<artifactId>spring-cloud-common-model</artifactId>
+			<version>1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<!-- AOP -->
+		<dependency>  
+		    <groupId>org.springframework.boot</groupId>  
+		    <artifactId>spring-boot-starter-aop</artifactId>  
 		</dependency>
 		
 		<!-- security oauth2 start -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-oauth2</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.15</version>
 		</dependency>
 	</dependencies>
 

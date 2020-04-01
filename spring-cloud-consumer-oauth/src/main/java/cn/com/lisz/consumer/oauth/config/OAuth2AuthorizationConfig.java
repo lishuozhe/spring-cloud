@@ -2,6 +2,7 @@ package cn.com.lisz.consumer.oauth.config;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +24,6 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableAuthorizationServer
@@ -41,6 +40,8 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 	private int accessTokenValiditySecond;
 	@Value("${auth.refreshTokenValiditySecond}")
 	private int refreshTokenValiditySecond;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -56,7 +57,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		// @formatter:off
 		endpoints.tokenStore(getTokenStore()).authenticationManager(authenticationManager())
-				.userDetailsService(userDetailsService())
+				.userDetailsService(userDetailsService)
 				// 设置客户端可以使用get和post方式提交
 				.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
 		// token生成方式
@@ -79,17 +80,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 		// @formatter:on
 	}
 
-	// 设置添加用户信息,正常应该从数据库中读取
-	@Bean
-	UserDetailsService userDetailsService() {
-		InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
-		userDetailsService.createUser(User.withUsername("user_1").password(passwordEncoder().encode("123456"))
-				.authorities("ROLE_USER").build());
-		userDetailsService.createUser(User.withUsername("user_2").password(passwordEncoder().encode("123456"))
-				.authorities("ROLE_USER").build());
-		return userDetailsService;
-	}
-
 	@Bean
 	AuthenticationManager authenticationManager() {
 		AuthenticationManager authenticationManager = new AuthenticationManager() {
@@ -103,7 +93,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 	@Bean
 	public AuthenticationProvider daoAuhthenticationProvider() {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-		daoAuthenticationProvider.setUserDetailsService(userDetailsService());
+		daoAuthenticationProvider.setUserDetailsService(userDetailsService);
 		daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 		return daoAuthenticationProvider;

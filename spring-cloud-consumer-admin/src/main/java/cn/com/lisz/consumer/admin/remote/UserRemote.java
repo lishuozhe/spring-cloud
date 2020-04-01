@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cn.com.lisz.common.model.base.DictModel;
+import cn.com.lisz.common.model.base.UserModel;
 import cn.com.lisz.common.model.web.PaggingModel;
 import cn.com.lisz.common.model.web.RequestCondition;
-import cn.com.lisz.consumer.admin.remote.hystrix.DictRemoteHystrix;
+import cn.com.lisz.consumer.admin.remote.hystrix.UserRemoteHystrix;
 
-@FeignClient(name = "spring-cloud-producer-base", path = "/dict", fallback = DictRemoteHystrix.class)
-public interface DictRemote {
+@FeignClient(name = "spring-cloud-producer-base", path = "/user", fallback = UserRemoteHystrix.class)
+public interface UserRemote {
 
 	/**
 	 * 新增
@@ -23,7 +23,7 @@ public interface DictRemote {
 	 * @return
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public Long add(@RequestBody DictModel model);
+	public Long add(@RequestBody UserModel model);
 
 	/**
 	 * 删除
@@ -41,7 +41,7 @@ public interface DictRemote {
 	 * @return
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public boolean edit(@RequestBody DictModel model);
+	public boolean edit(@RequestBody UserModel model);
 
 	/**
 	 * 查看
@@ -50,7 +50,7 @@ public interface DictRemote {
 	 * @return
 	 */
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public DictModel get(@RequestParam(value = "id") Long id);
+	public UserModel get(@RequestParam(value = "id") Long id);
 
 	/**
 	 * 条件查看
@@ -59,7 +59,7 @@ public interface DictRemote {
 	 * @return
 	 */
 	@RequestMapping(value = "/findOne", method = RequestMethod.POST)
-	public DictModel findOne(@RequestBody List<RequestCondition> conditions);
+	public UserModel findOne(@RequestBody List<RequestCondition> conditions);
 
 	/**
 	 * 判断存在
@@ -77,7 +77,7 @@ public interface DictRemote {
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public List<DictModel> list(@RequestBody List<RequestCondition> conditions);
+	public List<UserModel> list(@RequestBody List<RequestCondition> conditions);
 
 	/**
 	 * 分页查询
@@ -86,7 +86,7 @@ public interface DictRemote {
 	 * @return
 	 */
 	@RequestMapping(value = "/page", method = RequestMethod.POST)
-	public PaggingModel<DictModel> page(@RequestParam(value = "pageSize", defaultValue = "5") Integer size,
+	public PaggingModel<UserModel> page(@RequestParam(value = "pageSize", defaultValue = "5") Integer size,
 			@RequestParam(value = "pageNum", defaultValue = "1") Integer page,
 			@RequestBody List<RequestCondition> conditions);
 }

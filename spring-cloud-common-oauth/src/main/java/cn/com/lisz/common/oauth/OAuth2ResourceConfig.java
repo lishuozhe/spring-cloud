@@ -2,6 +2,7 @@ package cn.com.lisz.common.oauth;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,12 +26,18 @@ public class OAuth2ResourceConfig extends ResourceServerConfigurerAdapter {
 	@Value("${auth.secret}")
 	private String secret;
 
+	@Autowired
+	private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
+	@Autowired
+	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		// @formatter:off
 		http.authorizeRequests()
 				// 允许一些资源可以访问
-				.antMatchers(HttpMethod.GET, "/", "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/v2/api-docs/**")
+				.antMatchers(HttpMethod.GET, "/", "/swagger-ui.html", "/swagger-resources/**", "/webjars/**",
+						"/v2/api-docs/**")
 				.permitAll()
 				// 允许一些URL可以访问
 				// .antMatchers(settings.getPermital().split(",")).permitAll()
@@ -41,6 +48,9 @@ public class OAuth2ResourceConfig extends ResourceServerConfigurerAdapter {
 				.authenticationEntryPoint(
 						(request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
 				.and().authorizeRequests().anyRequest().authenticated();
+		// 添加自定义未授权和未登录结果返回
+		http.exceptionHandling().accessDeniedHandler(restfulAccessDeniedHandler)
+				.authenticationEntryPoint(restAuthenticationEntryPoint);
 		// @formatter:on
 	}
 
