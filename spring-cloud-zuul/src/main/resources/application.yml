@@ -4,8 +4,8 @@ server:
 spring:
   application:
     name: spring-cloud-zuul
-    profiles:
-        active: dev
+  profiles:
+    active: prod
      
 eureka: 
   client:
@@ -67,7 +67,6 @@ logging:
 --- 
 spring: 
   profiles: dev
-
      
 logging: 
   level: 
@@ -75,16 +74,15 @@ logging:
 ---  
 spring: 
   profiles: prod
-  
+  zipkin:
+    base-url: http://localhost:8300
+  sleuth:
+    sampler:
+      percentage: 1.0 
    
 logging: 
   level: 
     root: WARN 
 ---
-#spring: 
-  #zipkin:
-    #base-url: http://localhost:8300
-  #sleuth:
-    #sampler:
-      #percentage: 1.0
+
 

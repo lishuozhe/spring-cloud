@@ -6,7 +6,6 @@
 
 	<artifactId>spring-cloud-turbine</artifactId>
 	<name>spring-cloud-turbine</name>
-	<url>http://maven.apache.org</url>
 	<description>熔断监控</description>
 
 	<parent>

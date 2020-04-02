@@ -5,7 +5,7 @@ spring:
   application:
     name: spring-cloud-turbine
   profiles:
-    active: dev
+    active: prod
 
 eureka: 
   client:
@@ -26,11 +26,7 @@ logging:
 spring: 
   profiles: dev
   
-turbine:
-  appConfig: spring-cloud-consumer-admin, spring-cloud-consumer-oauth
-  aggregator:
-    clusterConfig: default
-  clusterNameExpression: new String("default")
+
   
 logging: 
   level: 
@@ -38,6 +34,12 @@ logging:
 ---     
 spring: 
   profiles: prod 
+  
+turbine:
+  appConfig: spring-cloud-consumer-admin, spring-cloud-consumer-oauth
+  aggregator:
+    clusterConfig: default
+  clusterNameExpression: new String("default")
   
 logging: 
   level: 

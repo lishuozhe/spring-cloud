@@ -5,7 +5,7 @@ spring:
   application:
     name: spring-cloud-producer-base
   profiles:
-    active: dev
+    active: prod
  
 eureka: 
   client:
@@ -44,6 +44,7 @@ spring:
     properties: 
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        
 # cloud
 cloud: 
   server: 
@@ -74,7 +75,12 @@ spring:
       stat-view-servlet: #访问监控网页的登录用户名和密码
         login-username: druid
         login-password: druid
-
+  zipkin:
+    base-url: http://localhost:8300
+  sleuth:
+    sampler:
+      percentage: 1.0
+      
 # cloud
 cloud: 
   server: 
@@ -106,8 +112,4 @@ logging:
     #port: 5672
     #username: admin
     #password: admin
-  #zipkin:
-    #base-url: http://localhost:8300
-  #sleuth:
-    #sampler:
-      #percentage: 1.0
+

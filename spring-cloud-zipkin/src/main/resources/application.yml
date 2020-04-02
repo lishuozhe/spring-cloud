@@ -1,16 +1,43 @@
-spring:
-    profiles:
-        active: dev
----     
-spring: 
-  application:
-    name: spring-cloud-zipkin
-  profiles: dev
-  
 server:
   port: 8300
   
+spring:
+  application:
+    name: spring-cloud-zipkin
+  profiles:
+    active: prod
+        
 eureka: 
   client:
     serviceUrl:
       defaultZone: http://localhost:8000/eureka/
+# log
+logging: 
+  level: 
+    com: 
+      netflix: 
+        eureka: OFF
+        discovery: OFF
+  file: ./logs/${spring.application.name}.log 
+---     
+spring: 
+  profiles: dev
+
+
+logging: 
+  level: 
+    root: INFO
+---     
+spring: 
+  profiles: prod
+
+      
+management: 
+  metrics: 
+    web: 
+      server: 
+        auto-time-requests: false
+logging: 
+  level: 
+    root: WARN 
+---  
