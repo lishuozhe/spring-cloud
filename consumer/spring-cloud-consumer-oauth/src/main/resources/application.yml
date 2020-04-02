@@ -5,7 +5,7 @@ spring:
   application:
     name: spring-cloud-consumer-oauth
   profiles:
-    active: prod
+    active: dev
     
 eureka: 
   client:

@@ -73,6 +73,8 @@ Mysql | 5.7 | https://www.mysql.com/
 - 熔断监控访问地址: http://localhost:8100/hystrix (填入数据地址: http://localhost:8100/turbine.stream)
 - 链路跟踪访问地址: http://localhost:8300/zipkin/
 
+> 熔断监控、链路跟踪只在生产环境下配置
+
 #### 查询条件使用
 查询, 更新, 删除处理条件判断, 默认使用 
 ``` List<RequestCondition> ``` 
