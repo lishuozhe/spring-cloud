@@ -1,22 +1,45 @@
-spring:
-    profiles:
-        active: dev
----     
-spring: 
-  application:
-    name: spring-cloud-turbine
-  profiles: dev
-  
 server:
   port: 8100
   
-turbine:
-  appConfig: spring-cloud-consumer
-  aggregator:
-    clusterConfig: default
-  clusterNameExpression: new String("default")
-  
+spring:
+  application:
+    name: spring-cloud-turbine
+  profiles:
+    active: dev
+
 eureka: 
   client:
     serviceUrl:
       defaultZone: http://localhost:8000/eureka/
+
+# log
+logging: 
+  level: 
+    com: 
+      netflix: 
+        eureka: OFF
+        discovery: OFF
+  file: ./logs/${spring.application.name}.log  
+
+
+---     
+spring: 
+  profiles: dev
+  
+turbine:
+  appConfig: spring-cloud-consumer-admin, spring-cloud-consumer-oauth
+  aggregator:
+    clusterConfig: default
+  clusterNameExpression: new String("default")
+  
+logging: 
+  level: 
+    root: INFO
+---     
+spring: 
+  profiles: prod 
+  
+logging: 
+  level: 
+    root: WARN  
+--- 

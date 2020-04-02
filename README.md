@@ -66,9 +66,11 @@ Mysql | 5.7 | https://www.mysql.com/
 
 - 启动producer服务会自动创建数据表 或者执行初始化数据库脚本<spring-cloud-base.sql>
 - 注册中心访问地址: http://localhost:8000
+- 认证中心熔断数据：http://localhost:10000/actuator/hystrix.stream
 - 管理中心文档地址: http://localhost:9100/swagger-ui.html#/
+- 管理中心熔断数据：http://localhost:9100/actuator/hystrix.stream
 - 网关文档地址: http://localhost:8888/swagger-ui.html
-- 熔断监控访问地址: 
+- 熔断监控访问地址: http://localhost:8100/hystrix (填入数据地址: http://localhost:8100/turbine.stream)
 - 链路跟踪访问地址: 
 
 #### 查询条件使用

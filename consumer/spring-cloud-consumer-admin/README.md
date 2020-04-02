@@ -7,3 +7,4 @@ spring-cloud微服务架构
 ```
 
 - 接口文档地址: http://localhost:9100/swagger-ui.html#/
+- 熔断数据地址：http://localhost:9100/actuator/hystrix.stream

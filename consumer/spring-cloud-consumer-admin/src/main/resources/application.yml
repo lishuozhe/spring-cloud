@@ -86,6 +86,16 @@ eureka:
 logging: 
   level: 
     root: INFO
+    
+feign: 
+  hystrix: 
+    enabled: true
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
 ---     
 spring: 
   profiles: prod 
@@ -116,7 +126,4 @@ logging:
     #sampler:
       #percentage: 1.0
       
-#feign: 
-  #hystrix: 
-    #enabled: false
-  
+
