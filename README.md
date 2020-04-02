@@ -13,15 +13,16 @@ spring-cloud微服务架构
 ``` lua
 spring-cloud
 ├── spring-cloud-config -- 配置中心（8200）
-├── spring-cloud-common -- 通用模块
+├── common
+	├── spring-cloud-common -- 通用模块
 	├── spring-cloud-common-data -- 通用数据模块，服务生产者使用
 	├── spring-cloud-common-model -- 通用模型模块，服务生产者和消费者使用
 	└── spring-cloud-common-oauth -- 通用权限模块，服务消费者使用
 ├── spring-cloud-eureka -- 注册中心（8000）
 ├── spring-cloud-zuul -- 服务网关（8888）
-├── spring-cloud-producer -- 服务生产者
+├── producer
 	└── spring-cloud-producer-base -- 基础服务（9000）
-├── spring-cloud-consumer -- 服务消费者
+├── consumer
 	├── spring-cloud-consumer-oauth -- 认证中心（10000）
 	└── spring-cloud-consumer-admin -- 管理中心（9100）
 ├── spring-cloud-turbine -- 熔断监控（8100）

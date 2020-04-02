@@ -35,14 +35,14 @@
 	</build>
 
 	<modules>
-		<module>spring-cloud-common</module>
-		<module>spring-cloud-common-model</module>
-		<module>spring-cloud-common-data</module>
-		<module>spring-cloud-common-oauth</module>
+		<module>common/spring-cloud-common</module>
+		<module>common/spring-cloud-common-model</module>
+		<module>common/spring-cloud-common-data</module>
+		<module>common/spring-cloud-common-oauth</module>
+		<module>producer/spring-cloud-producer-base</module>
+		<module>consumer/spring-cloud-consumer-admin</module>
+		<module>consumer/spring-cloud-consumer-oauth</module>
 		<module>spring-cloud-eureka</module>
-		<module>spring-cloud-producer-base</module>
-		<module>spring-cloud-consumer-admin</module>
-		<module>spring-cloud-consumer-oauth</module>
 		<module>spring-cloud-turbine</module>
 		<module>spring-cloud-config</module>
 		<module>spring-cloud-zuul</module>
