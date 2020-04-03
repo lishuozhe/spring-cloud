@@ -73,7 +73,7 @@ Mysql | 5.7 | https://www.mysql.com/
 
 > 本地环境搭建
 
-- 启动producer服务会自动创建数据表 或者执行初始化数据库脚本<spring-cloud-base.sql>
+- 启动producer服务会自动创建数据表 或者执行初始化数据库脚本<spring-cloud-base.sql>，默认账号:admin 密码:admin
 - 注册中心访问地址: http://localhost:8000
 - 认证中心熔断数据：http://localhost:10000/actuator/hystrix.stream
 - 管理中心文档地址: http://localhost:9100/swagger-ui.html#/

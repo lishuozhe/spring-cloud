@@ -35,7 +35,7 @@ public class LoginServiceImpl implements ILoginService {
 	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 	@Override
-	public Object user(UserModel model) {
+	public ResultModel<?> user(UserModel model) {
 		ResultModel<UserModel> result = new ResultModel<UserModel>();
 		if (model == null || model.getUsername() == null || model.getPassword() == null) {
 			return result.failed("用户名、密码不能为空");
@@ -52,20 +52,22 @@ public class LoginServiceImpl implements ILoginService {
 		return loginAuth(user.getAuthUsername(), user.getAuthPassword());
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public Object token(String token) {
+	public ResultModel token(String token) {
 		String path = String.format("%s?grant_type=refresh_token&refresh_token=%s&client_id=%s&client_secret=%s", url,
 				token, clientId, clientSecret);
 		// 进行请求，并返回数据
-		ResponseEntity<String> authInfo = restTemplate.getForEntity(path, String.class);
+		ResponseEntity<ResultModel> authInfo = restTemplate.getForEntity(path, ResultModel.class);
 		return authInfo.getBody();
 	}
 
-	private String loginAuth(String username, String password) {
+	@SuppressWarnings("rawtypes")
+	private ResultModel loginAuth(String username, String password) {
 		String path = String.format("%s?grant_type=password&username=%s&password=%s&client_id=%s&client_secret=%s", url,
 				username, password, clientId, clientSecret);
 		// 进行请求，并返回数据
-		ResponseEntity<String> authInfo = restTemplate.getForEntity(path, String.class);
+		ResponseEntity<ResultModel> authInfo = restTemplate.getForEntity(path, ResultModel.class);
 		return authInfo.getBody();
 	}
 

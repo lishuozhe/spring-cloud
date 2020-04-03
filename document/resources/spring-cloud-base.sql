@@ -11,11 +11,58 @@
  Target Server Version : 50616
  File Encoding         : 65001
 
- Date: 01/04/2020 16:17:03
+ Date: 03/04/2020 18:54:16
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for sys_auth
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_auth`;
+CREATE TABLE `sys_auth` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `create_by` varchar(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0' COMMENT '删除状态: 0-否, 1-是',
+  `platform_id` bigint(20) DEFAULT NULL,
+  `remarks` varchar(200) DEFAULT NULL,
+  `update_by` varchar(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `username` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_auth
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_auth` VALUES (1, NULL, NULL, '0', NULL, NULL, NULL, NULL, '$2a$10$bpYdYmNV91.b9kTzC.tYguA36AuKDJLJhYSYvTkB3e8VbkNYMszYS', 'U-1');
+INSERT INTO `sys_auth` VALUES (8, NULL, '2020-04-03 18:41:22', '0', NULL, NULL, NULL, '2020-04-03 18:42:04', '$2a$10$nDmWCLSzDW1LnpPNndFJHuVCTzSNkWf2n7nddo3K0g5THrWcHRrEK', 'U-6');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for sys_auth_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_auth_role`;
+CREATE TABLE `sys_auth_role` (
+  `auth_id` bigint(20) NOT NULL,
+  `role_id` bigint(20) NOT NULL,
+  KEY `FK8s28unt0s6forhyl99nn8vjsj` (`role_id`),
+  KEY `FKcru6g612gnfqothanp9gydhnf` (`auth_id`),
+  CONSTRAINT `FKcru6g612gnfqothanp9gydhnf` FOREIGN KEY (`auth_id`) REFERENCES `sys_auth` (`id`),
+  CONSTRAINT `FK8s28unt0s6forhyl99nn8vjsj` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_auth_role
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_auth_role` VALUES (1, 1);
+INSERT INTO `sys_auth_role` VALUES (8, 2);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_dict
@@ -167,40 +214,21 @@ CREATE TABLE `sys_user` (
   `remarks` varchar(200) DEFAULT NULL,
   `update_by` varchar(20) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
+  `auth_password` varchar(100) DEFAULT NULL,
+  `auth_username` varchar(64) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `mobile` varchar(20) DEFAULT NULL,
   `password` varchar(64) DEFAULT NULL,
   `username` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES (1, NULL, NULL, '0', NULL, NULL, 'admin', '2020-04-01 15:04:29', NULL, NULL, '$2a$10$b4QxQh3Bh1lE6J4Ktdvz6OLHbxkY5Xwal4m1q9JYTsrs8Rqd2GYxa', 'admin');
-INSERT INTO `sys_user` VALUES (2, 'admin', '2020-04-01 11:40:52', '0', NULL, NULL, 'admin', '2020-04-01 15:04:38', NULL, NULL, '$2a$10$dxKpkyNfNhWcRjw06pmykuV.0gLZba4t6kpW9cN9Bx/sPknEFvKZm', 'test');
-COMMIT;
-
--- ----------------------------
--- Table structure for sys_user_role
--- ----------------------------
-DROP TABLE IF EXISTS `sys_user_role`;
-CREATE TABLE `sys_user_role` (
-  `user_id` bigint(20) NOT NULL,
-  `role_id` bigint(20) NOT NULL,
-  KEY `FKhh52n8vd4ny9ff4x9fb8v65qx` (`role_id`),
-  KEY `FKb40xxfch70f5qnyfw8yme1n1s` (`user_id`),
-  CONSTRAINT `FKb40xxfch70f5qnyfw8yme1n1s` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`),
-  CONSTRAINT `FKhh52n8vd4ny9ff4x9fb8v65qx` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_user_role
--- ----------------------------
-BEGIN;
-INSERT INTO `sys_user_role` VALUES (1, 1);
-INSERT INTO `sys_user_role` VALUES (2, 2);
+INSERT INTO `sys_user` VALUES (1, 'admin', '2020-04-03 11:27:20', '0', NULL, NULL, NULL, '2020-04-03 11:27:20', '1e515d4c-33b4-412f-a65e-26cba8323e88', 'U-1', NULL, NULL, '$2a$10$GG/a0JiBzWsHqCNNRkbEM.V25Ds.0ukHGyv2xQd1gLv4fLyEH8Aii', 'admin');
+INSERT INTO `sys_user` VALUES (6, 'U-1', '2020-04-03 18:41:22', '0', NULL, NULL, NULL, '2020-04-03 18:41:22', '31d05c5d-eb96-44cf-8c22-818b99d6fb10', 'U-6', NULL, NULL, '$2a$10$stbgeZ7RTpSuOAd.9EMbAemuYzFaSZv5woMPwwioHVE1GuTN7908O', 'test');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

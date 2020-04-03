@@ -17,7 +17,7 @@ import cn.com.lisz.common.data.entity.BaseEntity;
 @Entity(name = "sys_user")
 public class User extends BaseEntity {
 
-	@Column(length = 20)
+	@Column(length = 20, nullable = false)
 	private String username;
 
 	@Column(length = 50)
@@ -26,7 +26,7 @@ public class User extends BaseEntity {
 	@Column(length = 20)
 	private String mobile;
 
-	@Column(length = 64)
+	@Column(length = 64, nullable = false)
 	private String password;
 
 	@Column(length = 64)

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import cn.com.lisz.common.model.base.AuthModel;
 import cn.com.lisz.common.model.base.RoleModel;
 import cn.com.lisz.common.model.base.UserModel;
+import cn.com.lisz.common.model.base.UserType;
 import cn.com.lisz.common.model.web.PaggingModel;
 import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.common.model.web.ResultModel;
@@ -31,6 +32,29 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public ResultModel<UserModel> add(UserModel model) {
 		ResultModel<UserModel> result = new ResultModel<UserModel>();
+		if (model.getUsername() == null || model.getPassword() == null) {
+			return result.failed("用户名密码不能为空");
+		}
+		List<RequestCondition> conditions = new ArrayList<RequestCondition>();
+		conditions.add(new RequestCondition("username", model.getUsername()));
+		if (userRemote.exist(conditions)) {
+			return result.failed("用户已存在");
+		}
+		if (model.getEmail() != null) {
+			conditions = new ArrayList<RequestCondition>();
+			conditions.add(new RequestCondition("email", model.getEmail()));
+			if (userRemote.exist(conditions)) {
+				return result.failed("邮箱已经注册");
+			}
+		}
+		if (model.getMobile() != null) {
+			conditions = new ArrayList<RequestCondition>();
+			conditions.add(new RequestCondition("mobile", model.getMobile()));
+			if (userRemote.exist(conditions)) {
+				return result.failed("手机已经注册");
+			}
+		}
+
 		// 创建用户
 		if (model.getPassword() != null) {
 			String rawPassword = model.getPassword();
@@ -61,12 +85,11 @@ public class UserServiceImpl implements IUserService {
 		if (user.getAuthUsername() != null && user.getAuthPassword() != null) {
 			List<RequestCondition> conditions = new ArrayList<RequestCondition>();
 			conditions.add(new RequestCondition("username", user.getAuthUsername()));
-			conditions.add(new RequestCondition("password", encoder.encode(user.getAuthPassword())));
 			auth = authRemote.findOne(conditions);
 		}
 		// 创建授权用户
 		if (auth == null) {
-			String authUsername = "U-" + model.getId();
+			String authUsername = UserType.U.getName() + model.getId();
 			String authPassword = UUID.randomUUID().toString();
 			auth = new AuthModel(authUsername, encoder.encode(authPassword), null);
 			Long authId = authRemote.add(auth);
@@ -77,6 +100,7 @@ public class UserServiceImpl implements IUserService {
 				if (!userRemote.edit(user)) {
 					return result.failed("更新授权信息失败");
 				}
+				auth.setId(authId);
 			}
 		}
 		// 授权

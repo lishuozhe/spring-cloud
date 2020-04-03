@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
 @AllArgsConstructor
 public class UserModel extends BaseModel {
 
-	@ApiModelProperty(value = "用户名")
+	@ApiModelProperty(value = "用户名", required = true)
 	private String username;
 
 	@ApiModelProperty(value = "邮箱")
@@ -27,7 +27,7 @@ public class UserModel extends BaseModel {
 	@ApiModelProperty(value = "手机")
 	private String mobile;
 
-	@ApiModelProperty(value = "密码")
+	@ApiModelProperty(value = "密码", required = true)
 	private String password;
 
 	@ApiModelProperty(value = "认证用户名", hidden = true)
