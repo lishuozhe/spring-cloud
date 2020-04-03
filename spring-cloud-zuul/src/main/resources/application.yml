@@ -50,11 +50,6 @@ ribbon:
   MaxAutoRetries: 2
   #切换相同Server的次数
   MaxAutoRetriesNextServer: 0
-
-# 认证
-auth:
-  client_id: 4356a818-2fad-499e-8c61-62d33a5735ed
-  client_secret: 068v7AgVF057Il5iF3Bz8uW245TW77
   
 # log
 logging: 

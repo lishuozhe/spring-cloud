@@ -29,6 +29,7 @@ ribbon:
   
 # 认证
 auth:
+  url: http://localhost:10000/oauth/token
   secret: 212520
   accessTokenValiditySecond: 7200
   refreshTokenValiditySecond: 8640000
@@ -42,7 +43,29 @@ logging:
       netflix: 
         eureka: OFF
         discovery: OFF
-  file: ./logs/${spring.application.name}.log     
+  file: ./logs/${spring.application.name}.log   
+  
+  
+swagger: 
+  # 公共信息
+  enabled: true
+  title: 认证中心
+  description: 包含登录，注册、刷新等
+  version: 1.0
+  # 许可证及服务条款信息
+  license:
+  licenseUrl:
+  termsOfServiceUrl:
+  contact:
+    name: lisz
+    url:
+    email: 1216535@qq.com
+  base-package: cn.com.lisz.consumer.oauth.controller
+  # 鉴权策略ID，对应 SecurityReferences ID
+  authorization: 
+    name: Authorization
+    # 鉴权传递的Header参数
+    key-name: Authorization  
 ---     
 spring: 
   profiles: dev

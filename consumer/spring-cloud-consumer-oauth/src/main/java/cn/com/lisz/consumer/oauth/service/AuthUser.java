@@ -1,4 +1,4 @@
-package cn.com.lisz.common.oauth.custom;
+package cn.com.lisz.consumer.oauth.service;
 
 import java.util.Collection;
 

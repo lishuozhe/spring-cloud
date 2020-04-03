@@ -38,7 +38,7 @@ security:
 swagger: 
   # 公共信息
   enabled: true
-  title: 后台管理业务模块
+  title: 后台管理
   description: 包含常用基础模块，用户管理、角色管理、权限管理、字典管理等
   version: 1.0
   # 许可证及服务条款信息

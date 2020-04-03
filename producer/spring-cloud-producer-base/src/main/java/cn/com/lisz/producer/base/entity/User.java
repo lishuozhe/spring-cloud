@@ -5,13 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 import cn.com.lisz.common.data.entity.BaseEntity;
 
@@ -24,17 +19,20 @@ public class User extends BaseEntity {
 
 	@Column(length = 20)
 	private String username;
-	
+
 	@Column(length = 50)
 	private String email;
-	
+
 	@Column(length = 20)
 	private String mobile;
-	
+
 	@Column(length = 64)
 	private String password;
-	
-	@ManyToMany
-	@JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private List<Role> roles;
+
+	@Column(length = 64)
+	private String authUsername;
+
+	@Column(length = 100)
+	private String authPassword;
+
 }

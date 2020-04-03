@@ -20,11 +20,20 @@ spring-cloud
 	└── spring-cloud-common-oauth -- 通用权限模块，服务消费者使用
 ├── spring-cloud-eureka -- 注册中心（8000）
 ├── spring-cloud-zuul -- 服务网关（8888）
-├── producer
-	└── spring-cloud-producer-base -- 基础服务（9000）
+├── producer、、、、
+	├── spring-cloud-producer-base -- 基础服务（9000）（用户、权限、角色、字典等通用功能）
+	├── spring-cloud-producer-xxx -- 油站服务（9010）（油站、门店等功能）
+	├── spring-cloud-producer-member -- 会员服务（9020）（会员功能）
+	├── spring-cloud-producer-xxx -- 交易服务（9030）（收款、账单等功能）
+	├── spring-cloud-producer-xxx -- 便利店服务（9040）（商品、进货、库存等功能）
+	├── spring-cloud-producer-xxx -- 营销服务（9050）（卡劵、积分、营销等功能）
+	├── spring-cloud-producer-pay -- 支付服务（9060）（微信、支付宝、银行等功能）
+	└── spring-cloud-producer-sms -- 短信服务（9070）（短信发送、记录、模版等功能）
 ├── consumer
-	├── spring-cloud-consumer-oauth -- 认证中心（10000）
-	└── spring-cloud-consumer-admin -- 管理中心（9100）
+	├── spring-cloud-consumer-oauth -- 认证中心（10000）（认证、授权）
+	├── spring-cloud-consumer-admin -- 管理中心（9100）（后台管理系统、基础服务管理）
+	├── spring-cloud-consumer-member -- 会员中心（9200）（会员系统、APP）
+	└── spring-cloud-consumer-xxx -- 运营中心（9300）（门店系统、集团系统）
 ├── spring-cloud-turbine -- 熔断监控（8100）
 └── spring-cloud-zipkin -- 链路跟踪（8300）
 

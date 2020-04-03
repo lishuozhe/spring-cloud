@@ -40,7 +40,7 @@ public class OAuth2ResourceConfig extends ResourceServerConfigurerAdapter {
 		http.authorizeRequests()
 				// 允许一些资源可以访问
 				.antMatchers(HttpMethod.GET, "/", "/swagger-ui.html", "/swagger-resources/**", "/webjars/**",
-						"/v2/api-docs/**", "/actuator/hystrix.stream")
+						"/v2/api-docs/**", "/actuator/hystrix.stream", "/login/**", "/oauth/**")
 				.permitAll()
 				// 允许一些URL可以访问
 				// .antMatchers(settings.getPermital().split(",")).permitAll()

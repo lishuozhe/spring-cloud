@@ -38,12 +38,15 @@ public class UserController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResultModel<UserModel> add(
 			@ApiParam(name = "model", value = "用户模型", required = true) @RequestBody UserModel model) {
-		ResultModel<UserModel> result = new ResultModel<UserModel>();
-		Long id = userService.add(model);
-		if (id != null) {
-			return result.success();
-		}
-		return result.failed();
+		return userService.add(model);
+	}
+	
+	@PreAuthorize("hasAuthority('admin:user:add')")
+	@ApiOperation(value = "授权", notes = "授权用户")
+	@RequestMapping(value = "/auth", method = RequestMethod.POST)
+	public ResultModel<UserModel> auth(
+			@ApiParam(name = "model", value = "用户模型", required = true) @RequestBody UserModel model) {
+		return userService.auth(model);
 	}
 
 	@PreAuthorize("hasAuthority('admin:user:del')")

@@ -2,9 +2,9 @@ package cn.com.lisz.consumer.admin.service;
 
 import java.util.List;
 
-
 import cn.com.lisz.common.model.base.UserModel;
 import cn.com.lisz.common.model.web.PaggingModel;
+import cn.com.lisz.common.model.web.ResultModel;
 
 public interface IUserService {
 
@@ -14,7 +14,15 @@ public interface IUserService {
 	 * @param model
 	 * @return
 	 */
-	public Long add(UserModel model);
+	public ResultModel<UserModel> add(UserModel model);
+
+	/**
+	 * 授权
+	 *
+	 * @param model
+	 * @return
+	 */
+	public ResultModel<UserModel> auth(UserModel model);
 
 	/**
 	 * 删除

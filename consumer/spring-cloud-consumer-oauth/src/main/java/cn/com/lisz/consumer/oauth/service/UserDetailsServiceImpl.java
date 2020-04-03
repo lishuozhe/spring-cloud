@@ -14,9 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import cn.com.lisz.common.model.base.UserModel;
+import cn.com.lisz.common.model.base.AuthModel;
 import cn.com.lisz.common.model.web.RequestCondition;
-import cn.com.lisz.consumer.oauth.remote.UserRemote;
+import cn.com.lisz.consumer.oauth.remote.AuthRemote;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -27,23 +27,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	@Autowired
-	UserRemote userRemote;
+	AuthRemote authRemote;
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// System.out.println("收到的账号"+username);
-		// if (CheckFormat.isEmail(username)){
-		// passwd = userService.selectPasswdByEmail(username);
-		// }else if (CheckFormat.isPhone(username)){
-		// passwd = userService.selectPasswdByPhone(username);
-		// }else {
-		// throw new RuntimeException("登录账号不存在");
-		// }
-
 		logger.info("登录用户名:" + username);
-		UserModel model = findByUsername(username);
+		AuthModel model = findByUsername(username);
 		if (model == null) {
 			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
 		} else {
@@ -51,21 +42,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 	}
 
-	private UserModel findByUsername(String username) {
+	private AuthModel findByUsername(String username) {
 		List<RequestCondition> conditions = new ArrayList<RequestCondition>();
 		conditions.add(new RequestCondition("username", username));
-		return userRemote.findOne(conditions);
+		return authRemote.findOne(conditions);
 	}
 
-//	private UserModel findByEmail(String email) {
-//		List<RequestCondition> conditions = new ArrayList<RequestCondition>();
-//		conditions.add(new RequestCondition("email", email));
-//		return userRemote.findOne(conditions);
-//	}
-//
-//	private UserModel findByMobile(String mobile) {
-//		List<RequestCondition> conditions = new ArrayList<RequestCondition>();
-//		conditions.add(new RequestCondition("mobile", mobile));
-//		return userRemote.findOne(conditions);
-//	}
 }
