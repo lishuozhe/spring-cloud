@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import cn.com.lisz.common.model.base.UserModel;
 import cn.com.lisz.common.model.web.RequestCondition;
 import cn.com.lisz.common.model.web.ResultModel;
+import cn.com.lisz.consumer.oauth.model.LoginModel;
 import cn.com.lisz.consumer.oauth.remote.UserRemote;
 
 @Service
@@ -35,16 +36,13 @@ public class LoginServiceImpl implements ILoginService {
 	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 	@Override
-	public ResultModel<?> user(UserModel model) {
+	public ResultModel<?> user(LoginModel model) {
 		ResultModel<UserModel> result = new ResultModel<UserModel>();
-		if (model == null || model.getUsername() == null || model.getPassword() == null) {
-			return result.failed("用户名、密码不能为空");
-		}
 		List<RequestCondition> conditions = new ArrayList<RequestCondition>();
 		conditions.add(new RequestCondition("username", model.getUsername()));
 		UserModel user = userRemote.findOne(conditions);
 		if (user == null) {
-			return result.failed("用户名不存在");
+			return result.failed("用户不存在");
 		}
 		if (!encoder.matches(model.getPassword(), user.getPassword())) {
 			return result.failed("密码不正确");

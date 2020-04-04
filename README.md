@@ -85,6 +85,9 @@ Mysql | 5.7 | https://www.mysql.com/
 
 > 熔断监控、链路跟踪只在生产环境下配置
 
+模型验证使用 @Validation(policy = "user", require = true, rule = ValidationRule.mail, message = "邮箱格式格式不对")
+	
+
 #### 查询条件使用
 查询, 更新, 删除处理条件判断, 默认使用 
 ``` List<RequestCondition> ``` 

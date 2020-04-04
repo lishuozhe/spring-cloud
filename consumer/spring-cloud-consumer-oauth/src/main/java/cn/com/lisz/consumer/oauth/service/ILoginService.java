@@ -1,7 +1,7 @@
 package cn.com.lisz.consumer.oauth.service;
 
-import cn.com.lisz.common.model.base.UserModel;
 import cn.com.lisz.common.model.web.ResultModel;
+import cn.com.lisz.consumer.oauth.model.LoginModel;
 
 public interface ILoginService {
 
@@ -11,7 +11,7 @@ public interface ILoginService {
 	 * @param model
 	 * @return
 	 */
-	public ResultModel<?> user(UserModel model);
+	public ResultModel<?> user(LoginModel model);
 
 	/**
 	 * 刷新token
