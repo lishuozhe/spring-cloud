@@ -4,10 +4,10 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>spring-cloud-common-oauth</artifactId>
+	<artifactId>spring-cloud-common-consumer</artifactId>
 	
-	<name>spring-cloud-common-oauth</name>
-	<description>通用模块-认证</description>
+	<name>spring-cloud-common-consumer</name>
+	<description>通用模块-生产者</description>
 
 	<parent>
 		<groupId>cn.com.lisz</groupId>

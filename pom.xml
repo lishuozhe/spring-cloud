@@ -37,8 +37,8 @@
 	<modules>
 		<module>common/spring-cloud-common</module>
 		<module>common/spring-cloud-common-model</module>
-		<module>common/spring-cloud-common-data</module>
-		<module>common/spring-cloud-common-oauth</module>
+		<module>common/spring-cloud-common-producer</module>
+		<module>common/spring-cloud-common-consumer</module>
 		<module>producer/spring-cloud-producer-base</module>
 		<module>consumer/spring-cloud-consumer-admin</module>
 		<module>consumer/spring-cloud-consumer-oauth</module>

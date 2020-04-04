@@ -23,7 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.com.lisz</groupId>
-			<artifactId>spring-cloud-common-oauth</artifactId>
+			<artifactId>spring-cloud-common-consumer</artifactId>
 			<version>1.0</version>
 		</dependency>
 		<dependency>

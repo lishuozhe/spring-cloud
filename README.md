@@ -15,9 +15,9 @@ spring-cloud
 ├── spring-cloud-config -- 配置中心（8200）
 ├── common
 	├── spring-cloud-common -- 通用模块
-	├── spring-cloud-common-data -- 通用数据模块，服务生产者使用
+	├── spring-cloud-common-producer -- 通用数据模块，服务生产者使用
 	├── spring-cloud-common-model -- 通用模型模块，服务生产者和消费者使用
-	└── spring-cloud-common-oauth -- 通用权限模块，服务消费者使用
+	└── spring-cloud-common-consumer -- 通用权限模块，服务消费者使用
 ├── spring-cloud-eureka -- 注册中心（8000）
 ├── spring-cloud-zuul -- 服务网关（8888）
 ├── producer、、、、
@@ -61,6 +61,7 @@ Docker | 应用容器引擎 （暂未集成）| [https://www.docker.com/](https:
 Druid | 数据库连接池 | [https://github.com/alibaba/druid](https://github.com/alibaba/druid)
 JWT | JWT登录支持 | [https://github.com/jwtk/jjwt](https://github.com/jwtk/jjwt)
 Lombok | 简化对象封装工具 | [https://github.com/rzwitserloot/lombok](https://github.com/rzwitserloot/lombok)
+ELK | 日志分析 （暂未集成）| 
 
 ### 开发环境
 
