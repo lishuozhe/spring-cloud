@@ -15,7 +15,7 @@ import com.spring4all.swagger.EnableSwagger2Doc;
 
 @EnableSwagger2Doc
 @EnableAuthorizationServer
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cn.com.lisz")
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableCircuitBreaker
