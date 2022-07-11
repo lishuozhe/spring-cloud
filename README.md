@@ -61,7 +61,7 @@ Docker | 应用容器引擎 （暂未集成）| [https://www.docker.com/](https:
 Druid | 数据库连接池 | [https://github.com/alibaba/druid](https://github.com/alibaba/druid)
 JWT | JWT登录支持 | [https://github.com/jwtk/jjwt](https://github.com/jwtk/jjwt)
 Lombok | 简化对象封装工具 | [https://github.com/rzwitserloot/lombok](https://github.com/rzwitserloot/lombok)
-ELK | 日志分析 （暂未集成）| 
+ELK | 日志分析 （暂未集成）| [https://www.elastic.co/](https://www.elastic.co/)
 
 ### 开发环境
 
